@@ -1,37 +1,49 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useParams } from 'react-router';
+import { getPostById } from '../../../redux/postsRedux';
+import { useSelector } from 'react-redux';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
 
-import clsx from 'clsx';
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+const Post = () => {
 
-import styles from './Post.module.scss';
+  const { id } = useParams();
+  const post = useSelector(state => getPostById(state, parseInt(id)));
 
-const Component = ({className, children}) => (
-  <div className={clsx(className, styles.root)}>
-    <h2>Post</h2>
-    {children}
-  </div>
-);
-
-Component.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
+  return (
+    <Card sx={{ maxWidth: 345 }}>
+      <CardHeader
+        title={post.title}
+      />
+      <CardMedia
+        component="img"
+        height="250"
+        image={`/images/` + post.image}
+        alt={post.title}
+      />
+      <CardContent>
+        <Typography variant="caption" gutterBottom display="block">
+          Published: {post.publishedDate}
+        </Typography>
+        <Typography variant="caption" gutterBottom display="block">
+          Edited: {post.editedDate}
+        </Typography>
+        <Typography variant="body2">
+          {post.description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Link to={`/post/${post.id}/edit`}><Button variant="text">Edit</Button></Link>
+      </CardActions>
+    </Card>
+  );
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
-
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
-
-export {
-  Component as Post,
-  // Container as Post,
-  Component as PostComponent,
-};
+export default Post;

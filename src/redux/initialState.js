@@ -1,9 +1,75 @@
 export const initialState = {
   posts: {
-    data: {},
+    data: [
+      {
+        id: 1,
+        title: 'Games Collection',
+        description: 'A collection of vintage games',
+        publishedDate: '12-04-2022',
+        editedDate: '12-04-2022',
+        email: 'johndoe@example.com',
+        status: 'published',
+        image: 'FQ4w9r5XIAIeJ_D.jpg',
+        price: 350,
+        phoneNumber: '729-355-212',
+        city: 'Krakow',
+      },
+      {
+        id: 2,
+        title: 'Dress size S',
+        description: 'Beautiful Chanel dress',
+        publishedDate: '12-03-2022',
+        editedDate: '12-03-2022',
+        email: 'amanda@example.com',
+        status: 'published',
+        image: 'FQ4w9r5XIAIeJ_D.jpg',
+        price: 70,
+        phoneNumber: '729-355-260',
+        city: 'Warsaw',
+      },
+      {
+        id: 3,
+        title: 'Barbie Doll',
+        description: 'Barbie Doll good as new',
+        publishedDate: '12-03-2022',
+        editedDate: '12-03-2022',
+        email: 'amanda@example.com',
+        status: 'published',
+        image: '',
+        price: '',
+        phoneNumber: '',
+        city: '',
+      },
+    ],
     loading: {
       active: false,
       error: false,
     },
+  },
+  users : {
+    data: [
+      {
+        id: 1,
+        name: 'Marta Nara',
+        email: 'marta.kos1230@gmail.com',
+        role: 'admin',
+        loggedIn: true,
+      },
+      {
+        id: 2,
+        name: 'John Doe',
+        email: 'johndoe@example.com',
+        role: 'user',
+        loggedIn: true,
+      },
+      {
+        id: 3,
+        name: 'Amanda Doe',
+        email: 'adoe@example.com',
+        role: 'user',
+        loggedIn: false,
+      },
+
+    ],
   },
 };
