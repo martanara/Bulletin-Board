@@ -27,7 +27,7 @@ const App = () => {
               <Route exact path='/post/add' element={<PostAdd/>} />
               <Route exact path='/post/:id' element={<Post/>} />
               <Route exact path='/post/:id/edit' element={<PostEdit/>} />
-              <Route path='*' component={<NotFound/>} />
+              <Route path='*' element={<NotFound/>} />
             </Routes>
           </MainLayout>
         </ThemeProvider>

@@ -1,21 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PostForm from '../../features/PostForm/PostForm';
+import { addPost } from '../../../redux/postsRedux';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import clsx from 'clsx';
+const PostAdd = () => {
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-import styles from './PostAdd.module.scss';
+  const handleSubmit = post => {
+    dispatch(addPost(post));
+    navigate('/');
+  };
 
-const PostAdd = ({className, children}) => (
-  <div className={clsx(className, styles.root)}>
-    <h2>PostAdd</h2>
-    {children}
-  </div>
-);
-
-PostAdd.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
+  return (
+    <PostForm
+      action={handleSubmit}
+      actionText={'Add post'}
+    />
+  );
 };
 
 export default PostAdd;

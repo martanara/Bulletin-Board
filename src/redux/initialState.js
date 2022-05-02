@@ -46,30 +46,5 @@ export const initialState = {
       error: false,
     },
   },
-  users : {
-    data: [
-      {
-        id: 1,
-        name: 'Marta Nara',
-        email: 'marta.kos1230@gmail.com',
-        role: 'admin',
-        loggedIn: true,
-      },
-      {
-        id: 2,
-        name: 'John Doe',
-        email: 'johndoe@example.com',
-        role: 'user',
-        loggedIn: true,
-      },
-      {
-        id: 3,
-        name: 'Amanda Doe',
-        email: 'adoe@example.com',
-        role: 'user',
-        loggedIn: false,
-      },
-
-    ],
-  },
+  users: 'guest',
 };
