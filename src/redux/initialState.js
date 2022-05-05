@@ -2,7 +2,7 @@ export const initialState = {
   posts: {
     data: [
       {
-        id: 1,
+        id: '1',
         title: 'Games Collection',
         description: 'A collection of vintage games',
         publishedDate: '12-04-2022',
@@ -15,7 +15,7 @@ export const initialState = {
         city: 'Krakow',
       },
       {
-        id: 2,
+        id: '2',
         title: 'Dress size S',
         description: 'Beautiful Chanel dress',
         publishedDate: '12-03-2022',
@@ -28,7 +28,7 @@ export const initialState = {
         city: 'Warsaw',
       },
       {
-        id: 3,
+        id: '3',
         title: 'Barbie Doll',
         description: 'Barbie Doll good as new',
         publishedDate: '12-03-2022',

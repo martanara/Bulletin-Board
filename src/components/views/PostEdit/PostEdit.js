@@ -10,13 +10,13 @@ import { Navigate } from 'react-router-dom';
 const PostEdit = () => {
 
   const { id } = useParams();
-  const postData = useSelector(state => getPostById(state, parseInt(id)));
+  const postData = useSelector(state => getPostById(state, String(id)));
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = post => {
-    dispatch(updatePost({ ...post, id: parseInt(id) }));
+    dispatch(updatePost({ ...post, id: String(id) }));
     navigate('/');
   };
 

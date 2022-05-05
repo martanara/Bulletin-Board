@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 const Post = () => {
 
   const { id } = useParams();
-  const post = useSelector(state => getPostById(state, parseInt(id)));
+  const post = useSelector(state => getPostById(state, String(id)));
   const user = useSelector(state => getUser(state));
 
   let button;
