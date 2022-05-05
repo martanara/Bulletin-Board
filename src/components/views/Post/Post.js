@@ -25,17 +25,23 @@ const Post = () => {
     button = <Link to={`/post/${post.id}/edit`}><Button variant="text">Edit</Button></Link>;
   }
 
+  const checkForImage = () => {
+    if(post.image) {
+      return  <CardMedia
+        component="img"
+        height="250"
+        image={`/images/` + post.image}
+        alt={post.title}
+      />;
+    }
+  };
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         title={post.title}
       />
-      <CardMedia
-        component="img"
-        height="250"
-        image={`/images/` + post.image}
-        alt={post.title}
-      />
+      {checkForImage()}
       <CardContent>
         <Typography variant="caption" gutterBottom display="block">
           Published: {post.publishedDate}

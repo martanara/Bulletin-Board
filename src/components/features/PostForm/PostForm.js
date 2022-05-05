@@ -8,8 +8,11 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import utils from '../../../utils';
 import ImageUploader from 'react-images-upload';
+import { useForm } from 'react-hook-form';
 
 const PostForm = ({action, actionText, ...props}) => {
+
+  const { register, handleSubmit: validate, formState: { errors } } = useForm();
 
   const [title, setTitle] = useState(props.title || '');
   const [description, setDescription] = useState(props.description || '');
@@ -33,24 +36,25 @@ const PostForm = ({action, actionText, ...props}) => {
     setStatus(status);
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = () => {
     action({ title, description, publishedDate, editedDate, email, status, image, price, phoneNumber, city });
   };
 
   return (
     <div>
       <Typography variant='h5'>{actionText} form</Typography>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={validate(handleSubmit)}>
         <TextField
           style={{ width: '200px', margin: '5px' }}
-          required
+          {...register('title', { required: true, maxLength: 20 })}
           type='text'
           label='title'
           variant='outlined'
           value={title}
           onChange={e => setTitle(e.target.value)}
         />
+        <br />
+        {errors.title && <span>This field is required. Max number of characters is 20</span>}
         <br />
         <ImageUploader
           withIcon={false}
@@ -64,6 +68,7 @@ const PostForm = ({action, actionText, ...props}) => {
         <br/>
         <TextField
           style={{ width: '400px', margin: '5px' }}
+          {...register('description', { required: true, maxLength: 300 })}
           required
           type='text'
           multiline
@@ -74,8 +79,11 @@ const PostForm = ({action, actionText, ...props}) => {
           onChange={e => setDescription(e.target.value)}
         />
         <br />
+        {errors.description && <span>This field is required. Max number of characters is 300 characters.</span>}
+        <br />
         <TextField
           style={{ width: '200px', margin: '5px' }}
+          {...register('email', { required: true, pattern: /^\S+@\S+\.\S+$/ })}
           required
           type='text'
           label='email'
@@ -84,8 +92,11 @@ const PostForm = ({action, actionText, ...props}) => {
           onChange={e => setEmail(e.target.value)}
         />
         <br />
+        {errors.email && <span>Please enter a valid email</span>}
+        <br />
         <TextField
           style={{ width: '200px', margin: '5px' }}
+          {...register('price', { required: true, min: 1 })}
           required
           type='text'
           label='price'
@@ -93,6 +104,8 @@ const PostForm = ({action, actionText, ...props}) => {
           value={price}
           onChange={e => setPrice(e.target.value)}
         />
+        <br />
+        {errors.price && <span>Price is required.</span>}
         <br />
         <TextField
           style={{ width: '200px', margin: '5px' }}
