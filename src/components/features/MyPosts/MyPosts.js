@@ -2,15 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { getAll } from '../../../redux/postsRedux';
 import { getUser } from '../../../redux/usersRedux';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
-const AllPosts = () => {
-
+const MyPosts = () => {
   const posts = useSelector(state => getAll(state));
-  //console.log(posts);
   const user = useSelector(state => getUser(state));
 
   let button;
@@ -21,7 +19,7 @@ const AllPosts = () => {
 
   return (
     <Box>
-      <h2>All posts:</h2>
+      <h2>My posts:</h2>
       <Grid container spacing={4}>
         <ul>
           {posts.map(post =>
@@ -36,5 +34,5 @@ const AllPosts = () => {
   );
 };
 
-export default AllPosts;
+export default MyPosts;
 

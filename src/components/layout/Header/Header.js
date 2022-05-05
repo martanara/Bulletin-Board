@@ -12,6 +12,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
 
@@ -41,9 +42,7 @@ const Header = () => {
       <Toolbar>
         <Grid container spacing={2} direction="row" alignItems="center">
           <Grid item xs={8}>
-            <Typography variant="h6" color="inherit">
-                Bulletin Board
-            </Typography>
+            <Link to={`/`}><Button color="inherit">Bulletin Board</Button></Link>
           </Grid>
           <Grid item xs={2}>
             <FormControl className={classes.formControl}>
@@ -60,9 +59,12 @@ const Header = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={2}>
-            <Button href="https://www.google.pl/" color="inherit" variant="outlined">Login with Google</Button>
-          </Grid>
+        </Grid>
+        <Grid item xs={2}>
+          <Link to={`/myposts`}><Button color="inherit" variant="outlined">My posts</Button></Link>
+        </Grid>
+        <Grid item xs={2}>
+          <Button href="https://www.google.pl/" color="inherit" variant="outlined">Login with Google</Button>
         </Grid>
       </Toolbar>
     </AppBar>

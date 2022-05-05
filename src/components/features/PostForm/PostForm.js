@@ -8,23 +8,24 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import utils from '../../../utils';
 
-const PostForm = props => {
-
-  const action = props.action;
-  const actionText = props.actionText;
+const PostForm = ({action, actionText, ...props}) => {
 
   const [title, setTitle] = useState(props.title || '');
   const [description, setDescription] = useState(props.description || '');
   // eslint-disable-next-line
   const [publishedDate, setPublishedDate] = useState(props.publishedDate || utils.dateToStr(new Date()));
   // eslint-disable-next-line
-  const [editedDate, setEditedDateDate] = useState(props.editedDate || utils.dateToStr(new Date()));
+  const [editedDate, setEditedDateDate] = useState(utils.dateToStr(new Date()));
   const [email, setEmail] = useState(props.email || '');
   // eslint-disable-next-line
-  const [status, setStatus] = useState(props.status || 'draft');
+  const [status, setStatus] = useState('draft');
   const [price, setPrice] = useState(props.price || '');
   const [phoneNumber, setPhoneNumber] = useState(props.phoneNumber || '');
   const [city, setCity] = useState(props.city || '');
+
+  const handleStatusChange = status => {
+    setStatus(status);
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -91,8 +92,11 @@ const PostForm = props => {
           onChange={e => setCity(e.target.value)}
         />
         <br />
-        <Button variant='contained' color='primary' type="submit">
+        <Button variant='contained' onClick={() => handleStatusChange('published')} color='primary' type="submit">
           {actionText}
+        </Button>
+        <Button variant='contained' onClick={() => handleStatusChange('draft')} color='primary' type="submit">
+          Save as draft
         </Button>
       </form>
     </div>
