@@ -36,7 +36,8 @@ const PostForm = ({action, actionText, ...props}) => {
     setStatus(status);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = e => {
+    e.preventDefault();
     action({ title, description, publishedDate, editedDate, email, status, image, price, phoneNumber, city });
   };
 
@@ -54,7 +55,8 @@ const PostForm = ({action, actionText, ...props}) => {
           onChange={e => setTitle(e.target.value)}
         />
         <br />
-        {errors.title && <span>This field is required. Max number of characters is 20</span>}
+        {(errors.title && errors.title.type && errors.title.type === 'required') && <span>This field is required</span>};
+        {(errors.title && errors.title.type && errors.title.type === 'maxLength') && <span>Title can have up to 20 characters.</span>};
         <br />
         <ImageUploader
           withIcon={false}
@@ -79,7 +81,7 @@ const PostForm = ({action, actionText, ...props}) => {
           onChange={e => setDescription(e.target.value)}
         />
         <br />
-        {errors.description && <span>This field is required. Max number of characters is 300 characters.</span>}
+        {errors.description && <span>This field is required. Description can have up to 300 characters.</span>}
         <br />
         <TextField
           style={{ width: '200px', margin: '5px' }}
