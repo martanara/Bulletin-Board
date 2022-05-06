@@ -38,11 +38,11 @@ const SmallCard = (props) => {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {props.description}
+          {props.price}
         </Typography>
       </CardContent>
       <CardActions>
-        <Link to={`/post/${props.id}`} className={styles.link}> <OutlinedButton color='#000000' border='solid 1px #000000'>Show more</OutlinedButton></Link>
+        <Link to={`/post/${props.id}`} className={styles.link}> <OutlinedButton color='#553d67' border='solid 2px #553d67'>Show more</OutlinedButton></Link>
       </CardActions>
     </Card>
   );
@@ -53,7 +53,7 @@ SmallCard.propTypes = {
   publishedDate: PropTypes.string,
   editedDate: PropTypes.string,
   image: PropTypes.string,
-  description: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };
 

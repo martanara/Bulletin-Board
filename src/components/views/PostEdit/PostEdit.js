@@ -24,7 +24,6 @@ const PostEdit = () => {
   return (
     <PostForm
       action={handleSubmit}
-      actionText={'Edit post'}
       title={postData.title}
       description={postData.description}
       publishedDate={postData.publishedDate}

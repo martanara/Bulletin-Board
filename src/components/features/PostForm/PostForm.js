@@ -3,12 +3,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Typography, TextField, Button } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 import ImageUploader from 'react-images-upload';
 import { useForm } from 'react-hook-form';
 
 import utils from '../../../utils';
+
+import CommonButton from '../../common/CommonButton/CommonButton';
+import styles from './PostForm.module.scss';
 
 const PostForm = (props) => {
 
@@ -39,9 +42,8 @@ const PostForm = (props) => {
   };
 
   return (
-    <div>
-      <Typography variant='h5'>{props.actionText} form</Typography>
-      <form onSubmit={validate(handleSubmit)}>
+    <div className={styles.root}>
+      <form onSubmit={validate(handleSubmit)} className={styles.form}>
         <TextField
           style={{ width: '200px', margin: '5px' }}
           {...register('title', { required: true, maxLength: 20 })}
@@ -51,10 +53,9 @@ const PostForm = (props) => {
           value={title}
           onChange={e => setTitle(e.target.value)}
         />
-        <br />
         {errors.title && <span>This field is required. Title can have up to 20 characters.</span>}
-        <br />
         <ImageUploader
+          className={styles.imageUploader}
           withIcon={false}
           withPreview={true}
           buttonText="Choose images"
@@ -63,7 +64,6 @@ const PostForm = (props) => {
           maxFileSize={5242880}
           singleImage={true}
         />
-        <br/>
         <TextField
           style={{ width: '400px', margin: '5px' }}
           {...register('description', { required: true, maxLength: 300 })}
@@ -76,9 +76,7 @@ const PostForm = (props) => {
           value={description}
           onChange={e => setDescription(e.target.value)}
         />
-        <br />
         {errors.description && <span>This field is required. Description can have up to 300 characters.</span>}
-        <br />
         <TextField
           style={{ width: '200px', margin: '5px' }}
           {...register('email', { required: true, pattern: /^\S+@\S+\.\S+$/ })}
@@ -89,9 +87,7 @@ const PostForm = (props) => {
           value={email}
           onChange={e => setEmail(e.target.value)}
         />
-        <br />
         {errors.email && <span>Please enter a valid email</span>}
-        <br />
         <TextField
           style={{ width: '200px', margin: '5px' }}
           {...register('price', { required: true, min: 1 })}
@@ -102,9 +98,7 @@ const PostForm = (props) => {
           value={price}
           onChange={e => setPrice(e.target.value)}
         />
-        <br />
         {errors.price && <span>Price is required.</span>}
-        <br />
         <TextField
           style={{ width: '200px', margin: '5px' }}
           type='text'
@@ -113,7 +107,6 @@ const PostForm = (props) => {
           value={phoneNumber}
           onChange={e => setPhoneNumber(e.target.value)}
         />
-        <br />
         <TextField
           style={{ width: '200px', margin: '5px' }}
           type='text'
@@ -122,13 +115,14 @@ const PostForm = (props) => {
           value={city}
           onChange={e => setCity(e.target.value)}
         />
-        <br />
-        <Button variant='contained' onClick={() => handleStatusChange('published')} color='primary' type="submit">
-          {props.actionText}
-        </Button>
-        <Button variant='contained' onClick={() => handleStatusChange('draft')} color='primary' type="submit">
-          Save as draft
-        </Button>
+        <div className={styles.buttons}>
+          <CommonButton onClick={() => handleStatusChange('draft')} type="submit">
+            Publish
+          </CommonButton>
+          <CommonButton onClick={() => handleStatusChange('draft')} type="submit">
+            Save as draft
+          </CommonButton>
+        </div>
       </form>
     </div>
   );
@@ -136,7 +130,6 @@ const PostForm = (props) => {
 
 PostForm.propTypes = {
   action: PropTypes.func.isRequired,
-  actionText: PropTypes.string.isRequired,
   props: PropTypes.shape({
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,

@@ -28,6 +28,8 @@ const CommonButton = (props) => {
         root: classes.root, // class name, e.g. `classes-nesting-root-x`
         label: classes.label, // class name, e.g. `classes-nesting-label-x`
       }}
+      type={props.type}
+      onClick={props.onClick}
     >
       {props.children}
     </Button>
@@ -36,6 +38,8 @@ const CommonButton = (props) => {
 
 CommonButton.propTypes = {
   children: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default CommonButton;

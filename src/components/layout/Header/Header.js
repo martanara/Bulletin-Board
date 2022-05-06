@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { getUser } from '../../../redux/usersRedux';
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -16,6 +18,8 @@ import styles from './Header.module.scss';
 
 const Header = () => {
 
+  const user = useSelector(state => getUser(state));
+
   const dispatch = useDispatch();
 
   const [role, setRole] = useState('guest');
@@ -24,6 +28,14 @@ const Header = () => {
     dispatch(addUser(event.target.value));
     setRole(event.target.value);
   };
+
+  const userButtons = () => user === 'admin' || user === 'loggedUser'
+    ?
+    <div>
+      <Link to={`/myposts`} className={styles.link}><CommonButton>My posts</CommonButton></Link>
+      <Link to={`/post/add`} className={styles.link}><CommonButton>Add Post</CommonButton></Link>
+    </div>
+    : null;
 
   return (
     <div className={styles.navbar}>
@@ -42,7 +54,7 @@ const Header = () => {
           <MenuItem value={'loggedUser'}>LoggedUser</MenuItem>
         </Select>
         <Link to={`/`} className={styles.link}><CommonButton>All posts</CommonButton></Link>
-        <Link to={`/myposts`} className={styles.link}><CommonButton>My posts</CommonButton></Link>
+        {userButtons()}
         <a href="https://www.google.pl/" className={styles.link}><OutlinedButton color='#ffffff' border='solid 2px #ffffff'>Login with Google</OutlinedButton></a>
       </div>
     </div>

@@ -1,56 +1,59 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { getPostById } from '../../../redux/postsRedux';
-import { getUser } from '../../../redux/usersRedux';
 import { useSelector } from 'react-redux';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import styles from './Post.module.scss';
+import PlaceOutlinedIcon from '@material-ui/icons/PlaceOutlined';
+import OutlinedButton from '../../common/OutlinedButton/OutlinedButton';
+import { getUser } from '../../../redux/usersRedux';
 import { Link } from 'react-router-dom';
 
-
 const Post = () => {
-
   const { id } = useParams();
   const post = useSelector(state => getPostById(state, String(id)));
+
   const user = useSelector(state => getUser(state));
 
-  let button;
-
-  if(user === 'admin' || user === 'loggedUser'){
-    button = <Link to={`/post/${post.id}/edit`}><Button variant="text">Edit</Button></Link>;
-  }
+  const editButton  = () => user === 'admin' || user === 'loggedUser'
+    ?
+    <div className={styles.editButton}>
+      <Link to={`/post/${post.id}/edit`} className={styles.link}><OutlinedButton color='#FE6B8B' border='solid 2px #FE6B8B'>Edit Post</OutlinedButton></Link>
+    </div>
+    : null;
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
-        title={post.title}
-      />
-      <CardMedia
-        component="img"
-        height="250"
-        image={post.image ? `/images/` + post.image : '/no-image-icon-23480.jpg'}
-        alt={post.title}
-      />
-      <CardContent>
-        <Typography variant="caption" gutterBottom display="block">
-          Published: {post.publishedDate}
-        </Typography>
-        <Typography variant="caption" gutterBottom display="block">
-          Edited: {post.editedDate}
-        </Typography>
-        <Typography variant="body2">
-          {post.description}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        {button}
-      </CardActions>
-    </Card>
+    <div className={styles.root}>
+      <div className={styles.postContainer}>
+        <div className={styles.imageContainer}>
+          <img alt="post.title" src={post.image ? `/images/` + post.image : 'https://www.freeiconspng.com/uploads/no-image-icon-1.jpg'}/>
+        </div>
+        <div className={styles.infoContainer}>
+          <h1>{post.title}</h1>
+          {post.city && (
+            <div className={styles.address}>
+              <PlaceOutlinedIcon/>
+              <h2>{post.city}</h2>
+            </div>
+          )}
+          <div className={styles.description}>
+            <p>{post.description}</p>
+          </div>
+          <div className={styles.price}>
+            <p>{post.price} USD</p>
+          </div>
+          <div className={styles.contactInfo}>
+            <h3>Contact info:</h3>
+            <p><span>email:</span> {post.email}</p>
+            <p><span>phone number:</span> {post.phoneNumber}</p>
+          </div>
+          <div className={styles.dates}>
+            <p>Published:{post.publishedDate} {post.editedDate && (<span>Edited:{post.editedDate}</span>)}</p>
+          </div>
+          {post.status === 'draft' && (<p>This post is a draft! Edit to publish.</p>)}
+          {editButton()}
+        </div>
+      </div>
+    </div>
   );
 };
 
