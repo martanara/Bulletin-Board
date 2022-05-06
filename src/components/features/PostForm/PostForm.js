@@ -1,49 +1,46 @@
 /* eslint react/prop-types: 0 */
 
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import utils from '../../../utils';
+
+import { Typography, TextField, Button } from '@material-ui/core';
+
 import ImageUploader from 'react-images-upload';
 import { useForm } from 'react-hook-form';
 
-const PostForm = ({action, actionText, ...props}) => {
+import utils from '../../../utils';
+
+const PostForm = (props) => {
 
   const { register, handleSubmit: validate, formState: { errors } } = useForm();
 
   const [title, setTitle] = useState(props.title || '');
   const [description, setDescription] = useState(props.description || '');
-  // eslint-disable-next-line
-  const [publishedDate, setPublishedDate] = useState(props.publishedDate || utils.dateToStr(new Date()));
-  // eslint-disable-next-line
-  const [editedDate, setEditedDateDate] = useState(utils.dateToStr(new Date()));
   const [email, setEmail] = useState(props.email || '');
   const [image, setImage] = useState(props.image || '');
-  // eslint-disable-next-line
   const [status, setStatus] = useState('draft');
   const [price, setPrice] = useState(props.price || '');
   const [phoneNumber, setPhoneNumber] = useState(props.phoneNumber || '');
   const [city, setCity] = useState(props.city || '');
 
+  const publishedDate = props.publishedDate || utils.dateToStr(new Date());
+  const editedDate = utils.dateToStr(new Date());
+
   const handleImageUpload = (files) => {
     setImage(files[0].name);
   };
 
-  const handleStatusChange = status => {
+  const handleStatusChange = (status) => {
     setStatus(status);
   };
 
   const handleSubmit = e => {
-    e.preventDefault();
-    action({ title, description, publishedDate, editedDate, email, status, image, price, phoneNumber, city });
+    props.action({ title, description, publishedDate, editedDate, email, status, image, price, phoneNumber, city });
   };
 
   return (
     <div>
-      <Typography variant='h5'>{actionText} form</Typography>
+      <Typography variant='h5'>{props.actionText} form</Typography>
       <form onSubmit={validate(handleSubmit)}>
         <TextField
           style={{ width: '200px', margin: '5px' }}
@@ -55,8 +52,7 @@ const PostForm = ({action, actionText, ...props}) => {
           onChange={e => setTitle(e.target.value)}
         />
         <br />
-        {(errors.title && errors.title.type && errors.title.type === 'required') && <span>This field is required</span>};
-        {(errors.title && errors.title.type && errors.title.type === 'maxLength') && <span>Title can have up to 20 characters.</span>};
+        {errors.title && <span>This field is required. Title can have up to 20 characters.</span>}
         <br />
         <ImageUploader
           withIcon={false}
@@ -128,7 +124,7 @@ const PostForm = ({action, actionText, ...props}) => {
         />
         <br />
         <Button variant='contained' onClick={() => handleStatusChange('published')} color='primary' type="submit">
-          {actionText}
+          {props.actionText}
         </Button>
         <Button variant='contained' onClick={() => handleStatusChange('draft')} color='primary' type="submit">
           Save as draft

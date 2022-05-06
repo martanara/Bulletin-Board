@@ -1,4 +1,26 @@
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.navbar {
+  min-height: 80px;
+  padding: 5px 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #242582;
+  align-items: center;
+
+  .link {
+    text-decoration: none;
+  }
+
+  h1 {
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: $base-size + 8;
+  }
+
+  .navlinks {
+    display: flex;
+    flex-direction: row;
+  }
+}
