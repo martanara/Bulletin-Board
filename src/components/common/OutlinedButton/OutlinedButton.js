@@ -4,11 +4,10 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 
 const OutlinedButton = (props) => {
-
   const useStyles = makeStyles({
     root: {
       borderRadius: 3,
-      border: 'solid 2px #ffffff',
+      border: `${props.border}`,
       height: 48,
       padding: '0 30px',
       textDecoration: 'none',
@@ -16,7 +15,7 @@ const OutlinedButton = (props) => {
       boxShadow: '0 3px 5px 2px rgba(255, 255, 255, .3)',
     },
     label: {
-      color: '#ffffff',
+      color: `${props.color}`,
       fontSize: 15,
     },
   });
@@ -36,6 +35,8 @@ const OutlinedButton = (props) => {
 
 OutlinedButton.propTypes = {
   children: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  border: PropTypes.string.isRequired,
 };
 
 export default OutlinedButton;

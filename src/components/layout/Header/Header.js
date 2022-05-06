@@ -8,8 +8,8 @@ import { addUser } from '../../../redux/usersRedux';
 
 import { Select, MenuItem } from '@material-ui/core';
 
-import CommonButton from '../../common/CommonButton';
-import OutlinedButton from '../../common/OutlinedButton';
+import CommonButton from '../../common/CommonButton/CommonButton';
+import OutlinedButton from '../../common/OutlinedButton/OutlinedButton';
 
 import styles from './Header.module.scss';
 
@@ -43,7 +43,7 @@ const Header = () => {
         </Select>
         <Link to={`/`} className={styles.link}><CommonButton>All posts</CommonButton></Link>
         <Link to={`/myposts`} className={styles.link}><CommonButton>My posts</CommonButton></Link>
-        <a href="https://www.google.pl/" className={styles.link}><OutlinedButton>Login with Google</OutlinedButton></a>
+        <a href="https://www.google.pl/" className={styles.link}><OutlinedButton color='#ffffff' border='solid 2px #ffffff'>Login with Google</OutlinedButton></a>
       </div>
     </div>
   );

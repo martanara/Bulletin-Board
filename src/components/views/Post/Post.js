@@ -30,12 +30,12 @@ const Post = () => {
       <CardHeader
         title={post.title}
       />
-      {post.image && (<CardMedia
+      <CardMedia
         component="img"
         height="250"
-        image={`/images/` + post.image}
+        image={post.image ? `/images/` + post.image : '/no-image-icon-23480.jpg'}
         alt={post.title}
-      />)}
+      />
       <CardContent>
         <Typography variant="caption" gutterBottom display="block">
           Published: {post.publishedDate}
