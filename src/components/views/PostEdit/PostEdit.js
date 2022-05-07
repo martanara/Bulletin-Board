@@ -1,6 +1,6 @@
 import React from 'react';
 import PostForm from '../../features/PostForm/PostForm';
-import { updatePost } from '../../../redux/postsRedux';
+import { updatePostRequest } from '../../../redux/postsRedux';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { getPostById } from '../../../redux/postsRedux';
@@ -16,7 +16,7 @@ const PostEdit = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = post => {
-    dispatch(updatePost({ ...post, id: String(id) }));
+    dispatch(updatePostRequest({ ...post, id: String(id) }));
     navigate('/');
   };
 

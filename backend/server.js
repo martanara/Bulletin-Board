@@ -14,7 +14,6 @@ app.use(express.urlencoded({ extended: false }));
 
 /* API ENDPOINTS */
 app.use('/api', postsRoutes);
-
 /* API ERROR PAGES */
 app.use('/api', (req, res) => {
   res.status(404).send({ post: 'Not found...' });

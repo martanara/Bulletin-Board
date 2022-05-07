@@ -4,7 +4,6 @@ exports.getAllPosts = async (req, res) => {
   try {
     const result = await Post
       .find({status: 'published'})
-      .select('author created title photo')
       .sort({created: -1});
     if(!result) res.status(404).json({ post: 'Not found' });
     else res.json(result);
@@ -27,12 +26,13 @@ exports.getPostById = async (req, res) => {
 };
 
 exports.addNewPost = async (req, res) => {
+  console.log('response', req.body);
   const { author, created, updated, status, title, text, image, price, phone, location } = req.body;
 
   try {
     const newPost = new Post({ author, created, updated, status, title, text, image, price, phone, location });
     await newPost.save();
-    res.json({ message: 'OK' });
+    res.json(newPost);
   } catch(err) {
     res.status(500).json({ message: err });
   }

@@ -53,7 +53,7 @@ SmallCard.propTypes = {
   created: PropTypes.string,
   updated: PropTypes.string,
   image: PropTypes.string,
-  price: PropTypes.string.isRequired,
+  price: PropTypes.string,
   id: PropTypes.string.isRequired,
 };
 

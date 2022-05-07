@@ -1,12 +1,10 @@
-//import axios from 'axios';
-
+import Axios from 'axios';
 import { API_URL } from '../config';
-
 import uniqid from 'uniqid';
 
 /* selectors */
-export const getAll = ({ posts }) => posts.data;
-export const getPostById = ({ posts }, postId) => (posts.data).find(post => post.id === postId);
+export const getAllPublished = ({posts}) => posts.data.filter(item => item.status === 'published');
+export const getPostById = ({ posts }, postId) => (posts.data).find(post => post._id === postId);
 
 /* action name creator */
 const reducerName = 'posts';
@@ -36,11 +34,49 @@ export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 
 /* thunk creators */
 
-export const fetchPosts = () => {
+export const fetchPublished = () => {
   return (dispatch) => {
-    fetch(`${API_URL}/posts`)
-      .then(res => res.json())
-      .then(posts => dispatch(updatePosts(posts)));
+    dispatch(fetchStarted());
+
+    Axios
+      .get(`${API_URL}/posts`)
+      .then(res => {
+        console.log(res.data);
+        dispatch(fetchSuccess(res.data));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+export const addPostRequest = (post) => {
+  return (dispatch) => {
+    dispatch(fetchStarted());
+
+    Axios
+      .post(`${API_URL}/posts`, post)
+      .then(res => {
+        dispatch(addPost(res.data));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+export const updatePostRequest = (post, postId) => {
+  return (dispatch) => {
+    dispatch(fetchStarted());
+
+    Axios
+      .put(`${API_URL}/post/${postId}`, post)
+      .then(res => {
+        dispatch(updatePost(res.data));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
   };
 };
 

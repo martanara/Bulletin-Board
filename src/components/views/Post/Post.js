@@ -10,8 +10,7 @@ import { Link } from 'react-router-dom';
 
 const Post = () => {
   const { id } = useParams();
-  const post = useSelector(state => getPostById(state, String(id)));
-
+  const post = useSelector(state => getPostById(state, id));
   const user = useSelector(state => getUser(state));
 
   const editButton  = () => user === 'admin' || user === 'loggedUser'

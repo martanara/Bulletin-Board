@@ -19,7 +19,7 @@ const PostForm = (props) => {
 
   const [title, setTitle] = useState(props.title || '');
   const [text, setDescription] = useState(props.text || '');
-  const [author, setEmail] = useState(props.author || '');
+  const [author, setAuthor] = useState(props.author || '');
   const [image, setImage] = useState(props.image || '');
   const [status, setStatus] = useState('draft');
   const [price, setPrice] = useState(props.price || '');
@@ -70,7 +70,7 @@ const PostForm = (props) => {
           required
           type='text'
           multiline
-          rows={5}
+          minRows={5}
           label='text'
           variant='outlined'
           value={text}
@@ -82,10 +82,10 @@ const PostForm = (props) => {
           {...register('author', { required: true, pattern: /^\S+@\S+\.\S+$/ })}
           required
           type='text'
-          label='author'
+          label='email'
           variant='outlined'
           value={author}
-          onChange={e => setEmail(e.target.value)}
+          onChange={e => setAuthor(e.target.value)}
         />
         {errors.author && <span>Please enter a valid author</span>}
         <TextField
@@ -116,7 +116,7 @@ const PostForm = (props) => {
           onChange={e => setCity(e.target.value)}
         />
         <div className={styles.buttons}>
-          <CommonButton onClick={() => handleStatusChange('draft')} type="submit">
+          <CommonButton onClick={() => handleStatusChange('published')} type="submit">
             Publish
           </CommonButton>
           <CommonButton onClick={() => handleStatusChange('draft')} type="submit">
