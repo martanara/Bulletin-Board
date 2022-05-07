@@ -1,6 +1,11 @@
 import React from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { fetchPosts } from './redux/postsRedux';
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { createMuiTheme, StylesProvider, ThemeProvider } from '@material-ui/core/styles';
+import { createTheme, StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import MainLayout from './components/layout/MainLayout/MainLayout';
 import Homepage from './components/views/Homepage/Homepage';
@@ -10,13 +15,16 @@ import PostAdd from './components/views/PostAdd/PostAdd';
 import NotFound from './components/views/NotFound/NotFound';
 import AllPosts from './components/features/AllPosts/AllPosts';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: { main: '#2B4C6F' },
   },
 });
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => dispatch(fetchPosts()), [dispatch]);
+
   return (
     <BrowserRouter>
       <StylesProvider injectFirst>

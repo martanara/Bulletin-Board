@@ -1,34 +1,54 @@
+//import axios from 'axios';
+
+import { API_URL } from '../config';
+
 import uniqid from 'uniqid';
 
 /* selectors */
-export const getAll = ({posts}) => posts.data;
-export const getPostById = ({posts}, postId) => (posts.data).find(post => post.id === postId);
+export const getAll = ({ posts }) => posts.data;
+export const getPostById = ({ posts }, postId) => (posts.data).find(post => post.id === postId);
 
 /* action name creator */
 const reducerName = 'posts';
 const createActionName = name => `app/${reducerName}/${name}`;
 
 /* action types */
+const UPDATE_POSTS = createActionName('UPDATE_POSTS');
+
 const ADD_POST_SUCCESS = createActionName('ADD_POST_SUCCESS');
 const REMOVE_POST_SUCCESS = createActionName('REMOVE_POST_SUCCESS');
 const UPDATE_POST_SUCCESS = createActionName('UPDATE_POST_SUCCESS');
+
 const FETCH_START = createActionName('FETCH_START');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 
 /* action creators */
+export const updatePosts = payload => ({ type: UPDATE_POSTS, payload });
+
 export const addPost = payload => ({ type: ADD_POST_SUCCESS, payload });
 export const removePost = payload => ({ type: REMOVE_POST_SUCCESS, payload });
 export const updatePost = payload => ({ type: UPDATE_POST_SUCCESS, payload });
+
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 
 /* thunk creators */
 
+export const fetchPosts = () => {
+  return (dispatch) => {
+    fetch(`${API_URL}/posts`)
+      .then(res => res.json())
+      .then(posts => dispatch(updatePosts(posts)));
+  };
+};
+
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
   switch (action.type) {
+    case UPDATE_POSTS:
+      return { ...statePart, data: [...action.payload] };
     case ADD_POST_SUCCESS:
       return {
         ...statePart,
