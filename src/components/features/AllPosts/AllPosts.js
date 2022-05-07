@@ -20,15 +20,15 @@ const AllPosts = () => {
             <SmallCard
               id={post.id}
               title={post.title}
-              description={post.description}
-              publishedDate={post.publishedDate}
-              editedDate={post.editedDate}
-              email={post.email}
+              text={post.text}
+              created={post.created}
+              updated={post.updated}
+              author={post.author}
               status={post.status}
               image={post.image}
               price={post.price}
-              phoneNumber={post.phoneNumber}
-              city={post.city}
+              phone={post.phone}
+              location={post.location}
             />
           </Grid>
         ))}

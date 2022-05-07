@@ -29,25 +29,25 @@ const Post = () => {
         </div>
         <div className={styles.infoContainer}>
           <h1>{post.title}</h1>
-          {post.city && (
+          {post.location && (
             <div className={styles.address}>
               <PlaceOutlinedIcon/>
-              <h2>{post.city}</h2>
+              <h2>{post.location}</h2>
             </div>
           )}
-          <div className={styles.description}>
-            <p>{post.description}</p>
+          <div className={styles.text}>
+            <p>{post.text}</p>
           </div>
           <div className={styles.price}>
             <p>{post.price} USD</p>
           </div>
           <div className={styles.contactInfo}>
             <h3>Contact info:</h3>
-            <p><span>email:</span> {post.email}</p>
-            <p><span>phone number:</span> {post.phoneNumber}</p>
+            <p><span>author:</span> {post.author}</p>
+            <p><span>phone number:</span> {post.phone}</p>
           </div>
           <div className={styles.dates}>
-            <p>Published:{post.publishedDate} {post.editedDate && (<span>Edited:{post.editedDate}</span>)}</p>
+            <p>Published:{post.created} {post.updated && (<span>Edited:{post.updated}</span>)}</p>
           </div>
           {post.status === 'draft' && (<p>This post is a draft! Edit to publish.</p>)}
           {editButton()}

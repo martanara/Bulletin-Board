@@ -28,7 +28,7 @@ const SmallCard = (props) => {
       <CardHeader
         className={classes.header}
         title={props.title}
-        subheader={props.publishedDate || props.editedDate}
+        subheader={props.created || props.updated}
       />
       <CardMedia
         component="img"
@@ -50,8 +50,8 @@ const SmallCard = (props) => {
 
 SmallCard.propTypes = {
   title: PropTypes.string.isRequired,
-  publishedDate: PropTypes.string,
-  editedDate: PropTypes.string,
+  created: PropTypes.string,
+  updated: PropTypes.string,
   image: PropTypes.string,
   price: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,

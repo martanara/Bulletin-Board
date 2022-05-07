@@ -25,15 +25,15 @@ const PostEdit = () => {
     <PostForm
       action={handleSubmit}
       title={postData.title}
-      description={postData.description}
-      publishedDate={postData.publishedDate}
-      editedDate={postData.editedDate}
-      email={postData.email}
+      text={postData.text}
+      created={postData.created}
+      updated={postData.updated}
+      author={postData.author}
       status={postData.status}
       image={postData.image}
       price={postData.price}
-      phoneNumber={postData.phoneNumber}
-      city={postData.city}
+      phone={postData.phone}
+      location={postData.location}
     />
   );
 };

@@ -18,16 +18,16 @@ const PostForm = (props) => {
   const { register, handleSubmit: validate, formState: { errors } } = useForm();
 
   const [title, setTitle] = useState(props.title || '');
-  const [description, setDescription] = useState(props.description || '');
-  const [email, setEmail] = useState(props.email || '');
+  const [text, setDescription] = useState(props.text || '');
+  const [author, setEmail] = useState(props.author || '');
   const [image, setImage] = useState(props.image || '');
   const [status, setStatus] = useState('draft');
   const [price, setPrice] = useState(props.price || '');
-  const [phoneNumber, setPhoneNumber] = useState(props.phoneNumber || '');
-  const [city, setCity] = useState(props.city || '');
+  const [phone, setPhoneNumber] = useState(props.phone || '');
+  const [location, setCity] = useState(props.location || '');
 
-  const publishedDate = props.publishedDate || utils.dateToStr(new Date());
-  const editedDate = utils.dateToStr(new Date());
+  const created = props.created || utils.dateToStr(new Date());
+  const updated = utils.dateToStr(new Date());
 
   const handleImageUpload = (files) => {
     setImage(files[0].name);
@@ -38,7 +38,7 @@ const PostForm = (props) => {
   };
 
   const handleSubmit = e => {
-    props.action({ title, description, publishedDate, editedDate, email, status, image, price, phoneNumber, city });
+    props.action({ title, text, created, updated, author, status, image, price, phone, location });
   };
 
   return (
@@ -66,28 +66,28 @@ const PostForm = (props) => {
         />
         <TextField
           style={{ width: '400px', margin: '5px' }}
-          {...register('description', { required: true, maxLength: 300 })}
+          {...register('text', { required: true, maxLength: 300 })}
           required
           type='text'
           multiline
           rows={5}
-          label='description'
+          label='text'
           variant='outlined'
-          value={description}
+          value={text}
           onChange={e => setDescription(e.target.value)}
         />
-        {errors.description && <span>This field is required. Description can have up to 300 characters.</span>}
+        {errors.text && <span>This field is required. text can have up to 300 characters.</span>}
         <TextField
           style={{ width: '200px', margin: '5px' }}
-          {...register('email', { required: true, pattern: /^\S+@\S+\.\S+$/ })}
+          {...register('author', { required: true, pattern: /^\S+@\S+\.\S+$/ })}
           required
           type='text'
-          label='email'
+          label='author'
           variant='outlined'
-          value={email}
+          value={author}
           onChange={e => setEmail(e.target.value)}
         />
-        {errors.email && <span>Please enter a valid email</span>}
+        {errors.author && <span>Please enter a valid author</span>}
         <TextField
           style={{ width: '200px', margin: '5px' }}
           {...register('price', { required: true, min: 1 })}
@@ -104,15 +104,15 @@ const PostForm = (props) => {
           type='text'
           label='phone number'
           variant='outlined'
-          value={phoneNumber}
+          value={phone}
           onChange={e => setPhoneNumber(e.target.value)}
         />
         <TextField
           style={{ width: '200px', margin: '5px' }}
           type='text'
-          label='city'
+          label='location'
           variant='outlined'
-          value={city}
+          value={location}
           onChange={e => setCity(e.target.value)}
         />
         <div className={styles.buttons}>
@@ -132,15 +132,15 @@ PostForm.propTypes = {
   action: PropTypes.func.isRequired,
   props: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    publishedDate: PropTypes.string.isRequired,
-    editedDate: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    created: PropTypes.string.isRequired,
+    updated: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
     image: PropTypes.string,
     price: PropTypes.string,
-    phoneNumber: PropTypes.string,
-    city: PropTypes.string,
+    phone: PropTypes.string,
+    location: PropTypes.string,
   }),
 };
 
