@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import axios from 'axios';
 import { API_URL } from '../config';
 import uniqid from 'uniqid';
 
@@ -50,6 +51,7 @@ export const fetchAllPosts = () => {
   };
 };
 
+/*
 export const addPostRequest = (post) => {
   return (dispatch) => {
     dispatch(fetchStarted());
@@ -64,20 +66,36 @@ export const addPostRequest = (post) => {
       });
   };
 };
+*/
 
-export const updatePostRequest = (post, id) => {
-  return (dispatch) => {
+export const addPostRequest = (post) => async dispatch => {
+  try {
     dispatch(fetchStarted());
+    const res = await axios({
+      method: 'post',
+      url: `${API_URL}/posts`,
+      data: post,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    dispatch(addPost(res.data));
+  } catch (err) {
+    dispatch(fetchError(err));
+  }
+};
 
-    Axios
-      .put(`${API_URL}/post/${id}`, post)
-      .then(res => {
-        dispatch(updatePost(res.data));
-      })
-      .catch(err => {
-        dispatch(fetchError(err.message || true));
-      });
-  };
+export const updatePostRequest = (post, id) => async dispatch => {
+  try {
+    dispatch(fetchStarted());
+    const res = await axios({
+      method: 'put',
+      url: `${API_URL}/post/${id}`,
+      data: post,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    dispatch(updatePost(res.data));
+  } catch (err) {
+    dispatch(fetchError(err));
+  }
 };
 
 export const removePostRequest = (postId) => {

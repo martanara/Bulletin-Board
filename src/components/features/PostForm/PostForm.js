@@ -23,21 +23,28 @@ const PostForm = (props) => {
   const [status, setStatus] = useState('draft');
   const [price, setPrice] = useState(props.price || '');
   const [phone, setPhoneNumber] = useState(props.phone || '');
-  const [location, setCity] = useState(props.location || '');
+  const [location, setLocation] = useState(props.location || '');
 
   const created = props.created || utils.dateToStr(new Date());
   const updated = utils.dateToStr(new Date());
 
   const handleImageUpload = (files) => {
-    setImage(files[0].name);
+    setImage(files[0]);
   };
 
   const handleStatusChange = (status) => {
     setStatus(status);
   };
 
-  const handleSubmit = e => {
-    props.action({ title, text, created, updated, author, status, image, price, phone, location });
+  const handleSubmit = () => {
+    const post = { title, text, created, updated, author, status, image, price, phone, location };
+    const formData = new FormData();
+
+    for(let key of ['title', 'text', 'created', 'updated','author', 'status', 'image', 'price', 'phone', 'location']) {
+      formData.append(key, post[key]);
+    }
+
+    props.action(formData);
   };
 
   return (
@@ -112,7 +119,7 @@ const PostForm = (props) => {
           label='location'
           variant='outlined'
           value={location}
-          onChange={e => setCity(e.target.value)}
+          onChange={e => setLocation(e.target.value)}
         />
         <div className={styles.buttons}>
           <CommonButton onClick={() => handleStatusChange('published')} type="submit">

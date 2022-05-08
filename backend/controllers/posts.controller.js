@@ -27,9 +27,12 @@ exports.getPostById = async (req, res) => {
 
 exports.addNewPost = async (req, res) => {
   const { author, created, updated, status, title, text, image, price, phone, location } = req.body;
+  const file = req.file;
+  let fileName = '';
+  if (file) fileName = file.path.split('/').slice(-1)[0];
 
   try {
-    const newPost = new Post({ author, created, updated, status, title, text, image, price, phone, location });
+    const newPost = new Post({ author, created, updated, status, title, text, image: fileName, price, phone, location });
     await newPost.save();
     res.json(newPost);
   } catch(err) {
@@ -39,6 +42,10 @@ exports.addNewPost = async (req, res) => {
 
 exports.editPost = async (req, res) => {
   const { author, created, updated, status, title, text, image, price, phone, location } = req.body;
+  const file = req.file;
+  let fileName = '';
+  if (file) fileName = file.path.split('/').slice(-1)[0];
+
   try {
     const post = await Post.findById(req.params.id);
     if(post){
@@ -48,7 +55,7 @@ exports.editPost = async (req, res) => {
       post.status = status;
       post.title = title;
       post.text = text;
-      post.image = image;
+      post.image = fileName;
       post.price = price;
       post.phone = phone;
       post.location = location;
