@@ -1,22 +1,32 @@
 import React from 'react';
 import { useParams } from 'react-router';
-import { getPostById } from '../../../redux/postsRedux';
-import { useSelector } from 'react-redux';
+import { getPostById, removePostRequest } from '../../../redux/postsRedux';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './Post.module.scss';
 import PlaceOutlinedIcon from '@material-ui/icons/PlaceOutlined';
 import OutlinedButton from '../../common/OutlinedButton/OutlinedButton';
 import { getUser } from '../../../redux/usersRedux';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Post = () => {
   const { id } = useParams();
   const post = useSelector(state => getPostById(state, id));
   const user = useSelector(state => getUser(state));
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const removePost = () => {
+    dispatch(removePostRequest(id));
+    navigate('/');
+  };
+
   const editButton  = () => user === 'admin' || user === 'loggedUser'
     ?
     <div className={styles.editButton}>
       <Link to={`/post/${id}/edit`} className={styles.link}><OutlinedButton color='#FE6B8B' border='solid 2px #FE6B8B'>Edit Post</OutlinedButton></Link>
+      <OutlinedButton color='#FE6B8B' border='solid 2px #FE6B8B' onClick={() => removePost()}>Remove Post</OutlinedButton>
     </div>
     : null;
 

@@ -23,6 +23,7 @@ const OutlinedButton = (props) => {
   const classes = useStyles();
   return (
     <Button
+      onClick={props.onClick}
       classes={{
         root: classes.root, // class name, e.g. `classes-nesting-root-x`
         label: classes.label, // class name, e.g. `classes-nesting-label-x`
@@ -37,6 +38,7 @@ OutlinedButton.propTypes = {
   children: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   border: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
 };
 
 export default OutlinedButton;

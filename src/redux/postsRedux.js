@@ -3,6 +3,7 @@ import { API_URL } from '../config';
 import uniqid from 'uniqid';
 
 /* selectors */
+export const getAllPosts = ({posts}) => posts.data;
 export const getAllPublished = ({posts}) => posts.data.filter(item => item.status === 'published');
 export const getPostById = ({ posts }, postId) => (posts.data).find(post => post._id === postId);
 
@@ -79,12 +80,13 @@ export const updatePostRequest = (post, id) => {
   };
 };
 
-export const removePostRequest = (post, postId) => {
+export const removePostRequest = (postId) => {
+  console.log(postId);
   return (dispatch) => {
     dispatch(fetchStarted());
 
     Axios
-      .delete(`${API_URL}/post/${postId}`, post)
+      .delete(`${API_URL}/post/${postId}`)
       .then(res => {
         dispatch(removePost(res.data));
       })
@@ -115,7 +117,7 @@ export const reducer = (statePart = [], action = {}) => {
           active: false,
           error: false,
         },
-        data: statePart.data.filter(post => post.id !== action.payload),
+        data: statePart.data.filter(post => post._id !== action.payload),
       };
     case UPDATE_POST:
       return {

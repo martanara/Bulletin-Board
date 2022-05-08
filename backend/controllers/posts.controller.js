@@ -66,7 +66,7 @@ exports.deletePost = async (req, res) => {
     const post = Post.findById(req.params.id);
     if(post){
       await Post.deleteOne({ _id: req.params.id });
-      res.json(await Post.find());
+      res.json(req.params.id);
     } else res.status(404).json({ message: 'Not found' });
   }
   catch(err) {
