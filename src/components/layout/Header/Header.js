@@ -55,7 +55,7 @@ const Header = () => {
         </Select>
         <Link to={`/`} className={styles.link}><CommonButton>All posts</CommonButton></Link>
         {userButtons()}
-        <a href="https://www.google.pl/" className={styles.link}><OutlinedButton color='#ffffff' border='solid 2px #ffffff'>Login with Google</OutlinedButton></a>
+        <a href="http://localhost:8000/auth/google" className={styles.link}><OutlinedButton color='#ffffff' border='solid 2px #ffffff'>Login with Google</OutlinedButton></a>
       </div>
     </div>
   );

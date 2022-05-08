@@ -81,7 +81,6 @@ export const updatePostRequest = (post, id) => {
 };
 
 export const removePostRequest = (postId) => {
-  console.log(postId);
   return (dispatch) => {
     dispatch(fetchStarted());
 
