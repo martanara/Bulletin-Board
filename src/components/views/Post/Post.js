@@ -16,7 +16,7 @@ const Post = () => {
   const editButton  = () => user === 'admin' || user === 'loggedUser'
     ?
     <div className={styles.editButton}>
-      <Link to={`/post/${post.id}/edit`} className={styles.link}><OutlinedButton color='#FE6B8B' border='solid 2px #FE6B8B'>Edit Post</OutlinedButton></Link>
+      <Link to={`/post/${id}/edit`} className={styles.link}><OutlinedButton color='#FE6B8B' border='solid 2px #FE6B8B'>Edit Post</OutlinedButton></Link>
     </div>
     : null;
 
@@ -24,7 +24,7 @@ const Post = () => {
     <div className={styles.root}>
       <div className={styles.postContainer}>
         <div className={styles.imageContainer}>
-          <img alt="post.title" src={post.image ? `/images/` + post.image : 'https://www.freeiconspng.com/uploads/no-image-icon-1.jpg'}/>
+          <img alt={post.title} src={post.image ? `/images/` + post.image : 'https://www.freeiconspng.com/uploads/no-image-icon-1.jpg'}/>
         </div>
         <div className={styles.infoContainer}>
           <h1>{post.title}</h1>

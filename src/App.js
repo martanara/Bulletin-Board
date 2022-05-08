@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { fetchPublished } from './redux/postsRedux';
+import { fetchAllPosts } from './redux/postsRedux';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createTheme, StylesProvider, ThemeProvider } from '@material-ui/core/styles';
@@ -23,7 +23,7 @@ const theme = createTheme({
 
 const App = () => {
   const dispatch = useDispatch();
-  useEffect(() => dispatch(fetchPublished()), [dispatch]);
+  useEffect(() => dispatch(fetchAllPosts()), [dispatch]);
 
   return (
     <BrowserRouter>

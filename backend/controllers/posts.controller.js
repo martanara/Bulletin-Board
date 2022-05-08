@@ -3,7 +3,7 @@ const Post = require('../models/post.model');
 exports.getAllPosts = async (req, res) => {
   try {
     const result = await Post
-      .find({status: 'published'})
+      .find()
       .sort({created: -1});
     if(!result) res.status(404).json({ post: 'Not found' });
     else res.json(result);
@@ -26,7 +26,6 @@ exports.getPostById = async (req, res) => {
 };
 
 exports.addNewPost = async (req, res) => {
-  console.log('response', req.body);
   const { author, created, updated, status, title, text, image, price, phone, location } = req.body;
 
   try {
@@ -40,7 +39,6 @@ exports.addNewPost = async (req, res) => {
 
 exports.editPost = async (req, res) => {
   const { author, created, updated, status, title, text, image, price, phone, location } = req.body;
-
   try {
     const post = await Post.findById(req.params.id);
     if(post){
@@ -55,7 +53,7 @@ exports.editPost = async (req, res) => {
       post.phone = phone;
       post.location = location;
       await post.save();
-      res.json(await Post.find());
+      res.json(await Post.findById(req.params.id));
     } else res.status(404).json({ message: 'Not found' });
   }
   catch(err) {

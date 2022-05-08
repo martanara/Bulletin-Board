@@ -14,7 +14,6 @@ import CommonButton from '../../common/CommonButton/CommonButton';
 import styles from './PostForm.module.scss';
 
 const PostForm = (props) => {
-
   const { register, handleSubmit: validate, formState: { errors } } = useForm();
 
   const [title, setTitle] = useState(props.title || '');
