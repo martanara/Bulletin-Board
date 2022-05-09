@@ -1,6 +1,5 @@
-import Axios from 'axios';
 import axios from 'axios';
-import { API_URL } from '../config';
+import { API_URL_POSTS } from '../config';
 import uniqid from 'uniqid';
 
 /* selectors */
@@ -40,8 +39,8 @@ export const fetchAllPosts = () => {
   return (dispatch) => {
     dispatch(fetchStarted());
 
-    Axios
-      .get(`${API_URL}/posts`)
+    axios
+      .get(`${API_URL_POSTS}/posts`)
       .then(res => {
         dispatch(fetchSuccess(res.data));
       })
@@ -73,7 +72,7 @@ export const addPostRequest = (post) => async dispatch => {
     dispatch(fetchStarted());
     const res = await axios({
       method: 'post',
-      url: `${API_URL}/posts`,
+      url: `${API_URL_POSTS}/posts`,
       data: post,
       headers: { 'Content-Type': 'multipart/form-data' },
     });
@@ -88,7 +87,7 @@ export const updatePostRequest = (post, id) => async dispatch => {
     dispatch(fetchStarted());
     const res = await axios({
       method: 'put',
-      url: `${API_URL}/post/${id}`,
+      url: `${API_URL_POSTS}/post/${id}`,
       data: post,
       headers: { 'Content-Type': 'multipart/form-data' },
     });
@@ -102,8 +101,8 @@ export const removePostRequest = (postId) => {
   return (dispatch) => {
     dispatch(fetchStarted());
 
-    Axios
-      .delete(`${API_URL}/post/${postId}`)
+    axios
+      .delete(`${API_URL_POSTS}/post/${postId}`)
       .then(res => {
         dispatch(removePost(res.data));
       })

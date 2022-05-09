@@ -15,7 +15,6 @@ import OutlinedButton from '../../common/OutlinedButton/OutlinedButton';
 
 import styles from './Header.module.scss';
 
-
 const Header = () => {
 
   const user = useSelector(state => getUser(state));
@@ -56,6 +55,7 @@ const Header = () => {
         <Link to={`/`} className={styles.link}><CommonButton>All posts</CommonButton></Link>
         {userButtons()}
         <a href="http://localhost:8000/auth/google" className={styles.link}><OutlinedButton color='#ffffff' border='solid 2px #ffffff'>Login with Google</OutlinedButton></a>
+        <a href="http://localhost:8000/auth/google.logout" className={styles.link}><OutlinedButton color='#ffffff' border='solid 2px #ffffff'>Logout</OutlinedButton></a>
       </div>
     </div>
   );

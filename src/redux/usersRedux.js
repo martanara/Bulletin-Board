@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { API_URL_USERS } from '../config';
+
 /* selectors */
 export const getUser = ({users}) => users;
 
@@ -12,6 +15,20 @@ const ADD_USER = createActionName('ADD_USER');
 export const addUser = payload => ({ type: ADD_USER, payload });
 
 /* thunk creators */
+
+export const fetchUser = () => {
+  return (dispatch) => {
+
+    axios
+      .get(`${API_URL_USERS}/logged`)
+      .then(res => {
+        console.log('userData', res);
+      })
+      .catch(err => {
+        console.log((err.message || true));
+      });
+  };
+};
 
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
