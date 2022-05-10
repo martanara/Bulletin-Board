@@ -20,7 +20,7 @@ export const fetchUser = () => {
   return (dispatch) => {
 
     axios
-      .get(`${API_URL_USERS}/logged`)
+      .get(`${API_URL_USERS}/user`)
       .then(res => {
         console.log('userData', res);
       })

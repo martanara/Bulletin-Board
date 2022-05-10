@@ -14,8 +14,6 @@ router.get('/auth.logout', (req, res) => {
   res.redirect('/');
 });
 
-router.get('/logged', isLogged, (req, res) => {
-  res.redirect('http://localhost:3000/');
-});
+router.get('/user', isLogged, AuthController.getUser);
 
 module.exports = router;
