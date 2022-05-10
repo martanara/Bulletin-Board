@@ -2,17 +2,17 @@ import axios from 'axios';
 import { API_URL_USERS } from '../config';
 
 /* selectors */
-export const getUser = ({users}) => users;
+export const getUser = ({ user }) => user;
 
 /* action name creator */
 const reducerName = 'users';
 const createActionName = name => `app/${reducerName}/${name}`;
 
 /* action types */
-const ADD_USER = createActionName('ADD_USER');
+const UPDATE_USER = createActionName('UPDATE_USER');
 
 /* action creators */
-export const addUser = payload => ({ type: ADD_USER, payload });
+export const updateUser = payload => ({ type: UPDATE_USER, payload });
 
 /* thunk creators */
 
@@ -33,7 +33,7 @@ export const fetchUser = () => {
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
   switch (action.type) {
-    case ADD_USER:
+    case UPDATE_USER:
       return action.payload;
     default:
       return statePart;

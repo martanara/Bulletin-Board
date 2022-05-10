@@ -22,7 +22,7 @@ const Post = () => {
     navigate('/');
   };
 
-  const editButton  = () => user === 'admin' || user === 'loggedUser'
+  const editButton  = () => user.role === 'admin' || user.email === post.author
     ?
     <div className={styles.editButton}>
       <Link to={`/post/${id}/edit`} className={styles.link}><OutlinedButton color='#FE6B8B' border='solid 2px #FE6B8B'>Edit Post</OutlinedButton></Link>

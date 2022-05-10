@@ -24,7 +24,7 @@ const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllPosts());
-    dispatch(fetchUser());
+    dispatch(fetchUser);
   }, [dispatch]);
 
   return (

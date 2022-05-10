@@ -6,5 +6,10 @@ export const initialState = {
       error: false,
     },
   },
-  users: 'guest',
+  user: {
+    role: 'guest',
+    email: '',
+    displayName: '',
+    posts: [],
+  },
 };

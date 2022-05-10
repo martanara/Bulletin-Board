@@ -9,7 +9,7 @@ import { reducer as usersReducer } from './usersRedux';
 // define reducers
 const reducers = {
   posts: postsReducer,
-  users: usersReducer,
+  user: usersReducer,
 };
 
 // add blank reducers for initial state properties without reducers

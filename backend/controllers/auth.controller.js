@@ -1,16 +1,16 @@
 const User = require('../models/user.model');
 
 exports.loginUser = async (req, res) => {
-  const { emails, displayName, id } = req.user;
+  const { emails, displayName } = req.user;
   const email = emails[0].value;
 
   try {
     const user = await User.find( { email: { $eq: email } } );
     if(!user){
-      const newUser = new User({ email, displayName, id, role: 'loggedUser' });
+      const newUser = new User({ email, displayName, role: 'loggedUser' });
       await newUser.save();
     }
-    res.redirect('http://localhost:3000/');
+    res.redirect('/');
   } catch(err) {
     res.status(500).json({ message: err });
   }

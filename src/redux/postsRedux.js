@@ -4,7 +4,13 @@ import uniqid from 'uniqid';
 
 /* selectors */
 export const getAllPosts = ({posts}) => posts.data;
-export const getAllPublished = ({posts}) => posts.data.filter(item => item.status === 'published');
+export const getMyPosts = ({posts}, user) => {
+  console.log(user);
+  if (user.role === 'admin') return posts.data;
+  else return posts.data.filter(post => post.author === user.email);
+};
+
+export const getAllPublished = ({posts}) => posts.data.filter(post => post.status === 'published');
 export const getPostById = ({ posts }, postId) => (posts.data).find(post => post._id === postId);
 
 /* action name creator */
@@ -49,23 +55,6 @@ export const fetchAllPosts = () => {
       });
   };
 };
-
-/*
-export const addPostRequest = (post) => {
-  return (dispatch) => {
-    dispatch(fetchStarted());
-
-    Axios
-      .post(`${API_URL}/posts`, post)
-      .then(res => {
-        dispatch(addPost(res.data));
-      })
-      .catch(err => {
-        dispatch(fetchError(err.message || true));
-      });
-  };
-};
-*/
 
 export const addPostRequest = (post) => async dispatch => {
   try {

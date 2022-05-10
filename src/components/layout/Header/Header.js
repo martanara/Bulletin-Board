@@ -1,34 +1,54 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { getUser } from '../../../redux/usersRedux';
-
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateUser } from '../../../redux/usersRedux';
+import { getUser } from '../../../redux/usersRedux';
 import { Link } from 'react-router-dom';
-
-import { useDispatch } from 'react-redux';
-import { addUser } from '../../../redux/usersRedux';
-
 import { Select, MenuItem } from '@material-ui/core';
-
 import CommonButton from '../../common/CommonButton/CommonButton';
-import OutlinedButton from '../../common/OutlinedButton/OutlinedButton';
-
 import styles from './Header.module.scss';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
 const Header = () => {
+
+  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
   const user = useSelector(state => getUser(state));
 
   const dispatch = useDispatch();
 
-  const [role, setRole] = useState('guest');
+  const [userRole, setUserRole] = useState('guest');
 
   const handleChange = (event) => {
-    dispatch(addUser(event.target.value));
-    setRole(event.target.value);
+    const user = {
+      displayName: 'Logged User',
+      email: 'logged@user.com',
+      role: event.target.value,
+      posts: [],
+    };
+    dispatch(updateUser(user));
+    setUserRole(event.target.value);
   };
 
-  const userButtons = () => user === 'admin' || user === 'loggedUser'
+  const responseGoogle = (res) => {
+    const { email, name } = res.profileObj;
+    const user = { displayName: name, email, role: 'loggedUser', posts: []};
+    dispatch(updateUser(user));
+    setUserRole('loggedUser');
+  };
+
+  const logout = (res) => {
+    const user = {
+      displayName: '',
+      email: '',
+      role: 'guest',
+      posts: [],
+    };
+    dispatch(updateUser(user));
+    setUserRole('loggedUser');
+  };
+
+  const userButtons = () => user.role === 'admin' || user.role === 'loggedUser'
     ?
     <div>
       <Link to={`/myposts`} className={styles.link}><CommonButton>My posts</CommonButton></Link>
@@ -45,7 +65,7 @@ const Header = () => {
         <Select
           labelId="role-select-label"
           id="role-select"
-          value={role}
+          value={userRole}
           onChange={handleChange}
         >
           <MenuItem value={'guest'}>Guest</MenuItem>
@@ -54,8 +74,20 @@ const Header = () => {
         </Select>
         <Link to={`/`} className={styles.link}><CommonButton>All posts</CommonButton></Link>
         {userButtons()}
-        <a href="http://localhost:8000/auth/google" className={styles.link}><OutlinedButton color='#ffffff' border='solid 2px #ffffff'>Login with Google</OutlinedButton></a>
-        <a href="http://localhost:8000/auth/google.logout" className={styles.link}><OutlinedButton color='#ffffff' border='solid 2px #ffffff'>Logout</OutlinedButton></a>
+        <GoogleLogin
+          clientId={clientId}
+          buttonText="Login"
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy={'single_host_origin'}
+          isSignedIn={true}
+        ></GoogleLogin>
+        <GoogleLogout
+          clientId={clientId}
+          buttonText="Logout"
+          onLogoutSuccess={logout}
+        >
+        </GoogleLogout>
       </div>
     </div>
   );
