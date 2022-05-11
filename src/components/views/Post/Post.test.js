@@ -2,7 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Post from './Post';
 import { Provider } from 'react-redux';
-import { store } from '../../../redux/store';
+import returnStoreAndPersistor from '../../../redux/store';
+
+const { store } = returnStoreAndPersistor();
 
 describe('Component Post', () => {
   it('should render without crashing', () => {

@@ -1,6 +1,6 @@
 const isLogged = (req, res, next) => {
   if (!req.user) {
-    res.redirect('/user/no-permission');
+    res.redirect('/');
   } else {
     next();
   }

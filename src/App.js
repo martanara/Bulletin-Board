@@ -2,7 +2,6 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchAllPosts } from './redux/postsRedux';
-import { fetchUser } from './redux/usersRedux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createTheme, StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
@@ -22,10 +21,8 @@ const theme = createTheme({
 
 const App = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchAllPosts());
-    dispatch(fetchUser);
-  }, [dispatch]);
+
+  useEffect(() => dispatch(fetchAllPosts()), [dispatch]);
 
   return (
     <BrowserRouter>

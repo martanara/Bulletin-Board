@@ -2,7 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Header from './Header';
 import { Provider } from 'react-redux';
-import { store } from '../../../redux/store';
+import returnStoreAndPersistor from '../../../redux/store';
+
+const { store } = returnStoreAndPersistor();
 
 describe('Component Header', () => {
   it('should render without crashing', () => {

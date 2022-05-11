@@ -16,18 +16,17 @@ export const updateUser = payload => ({ type: UPDATE_USER, payload });
 
 /* thunk creators */
 
-export const fetchUser = () => {
-  return (dispatch) => {
-
-    axios
-      .get(`${API_URL_USERS}/user`)
-      .then(res => {
-        console.log('userData', res);
-      })
-      .catch(err => {
-        console.log((err.message || true));
-      });
-  };
+export const fetchUser = () => dispatch => {
+  console.log('fetch');
+  axios({
+    method: 'get',
+    url: `${API_URL_USERS}/user`,
+    //headers: { 'Content-Type': 'multipart/form-data' },
+  }).then(
+    res => console.log('userData', res)
+  ).catch(
+    (err) => console.log('err', err)
+  );
 };
 
 /* reducer */
@@ -39,3 +38,16 @@ export const reducer = (statePart = [], action = {}) => {
       return statePart;
   }
 };
+
+// export const fetchUser = () => async dispatch => {
+//   try {
+//     const res = await axios({
+//       method: 'get',
+//       url: `http://localhost:8000/auth/user`,
+//       //headers: { 'Content-Type': 'multipart/form-data' },
+//     });
+//     console.log('userData', res);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
