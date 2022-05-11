@@ -5,7 +5,6 @@ import uniqid from 'uniqid';
 /* selectors */
 export const getAllPosts = ({posts}) => posts.data;
 export const getMyPosts = ({posts}, user) => {
-  console.log(user);
   if (user.role === 'admin') return posts.data;
   else return posts.data.filter(post => post.author === user.email);
 };

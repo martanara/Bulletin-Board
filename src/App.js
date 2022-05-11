@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchAllPosts } from './redux/postsRedux';
@@ -23,6 +24,11 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => dispatch(fetchAllPosts()), [dispatch]);
+  useEffect(() => {
+    axios.get('http://localhost:8000/auth/user').then(response => {
+      console.log(response.data);
+    });
+  },[]);
 
   return (
     <BrowserRouter>
