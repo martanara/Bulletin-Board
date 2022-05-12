@@ -19,8 +19,29 @@
     font-size: $base-size + 5;
   }
 
-  .navlinks {
+  .buttons {
     display: flex;
     flex-direction: row;
+
+    .linkDiv {
+      display: flex;
+      align-items: center;
+
+      .link {
+        text-decoration: none;
+        color: $light;
+        font-size: $base-size;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin: 0 20px;
+      }
+  }
+    .googleButtons {
+      margin-right: 20px;
+    }
+    .select {
+      margin-left: 400px;
+    }
   }
 }
+

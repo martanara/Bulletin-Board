@@ -3,7 +3,7 @@
 .root {
   display: flex;
   justify-content: center;
-  color: $dark-gray;
+  color: $dark;
 
   .link {
     text-decoration: none;
@@ -18,7 +18,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    border: solid 1px $light-heather;
+    border: solid 1px $secondary-light;
 
     .imageContainer {
       height: 300px;
@@ -41,7 +41,7 @@
       text-align: center;
 
       h1 {
-        color: $dark-heather;
+        color: $secondary-dark;
         margin: 10px;
       }
 
@@ -53,8 +53,8 @@
       .text {
         width: 100%;
         font-size: $base-size;
-        border-top: solid 1px $light-heather;
-        border-bottom: solid 1px $light-heather;
+        border-top: solid 1px $secondary-light;
+        border-bottom: solid 1px $secondary-light;
       }
       .price {
         font-size: $base-size +5;
@@ -62,7 +62,7 @@
       }
       .contactInfo {
         text-align: center;
-        background: $light-heather;
+        background: $primary-dark;
         width: 100%;
         padding: 10px;
         color: $light;
@@ -77,7 +77,7 @@
         }
       }
       .dates {
-        color: $light-gray;
+        color: $secondary-light;
         span {
           margin-left: 50px;
         }

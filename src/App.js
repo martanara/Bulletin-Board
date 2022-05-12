@@ -17,9 +17,11 @@ import AllPosts from './components/AllPosts/AllPosts';
 
 const theme = createTheme({
   palette: {
-    primary: { main: '#2B4C6F' },
+    primary: { main: '#4381C1' },
   },
 });
+
+console.log(theme);
 
 const App = () => {
   const dispatch = useDispatch();

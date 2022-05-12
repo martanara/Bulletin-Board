@@ -27,8 +27,8 @@ const Post = () => {
   const editButton  = () => user.role === 'admin' || user.email === post.author
     ?
     <div className={styles.editButton}>
-      <Link to={`/post/${id}/edit`} className={styles.link}><OutlinedButton color='#FE6B8B' border='solid 2px #FE6B8B'>Edit Post</OutlinedButton></Link>
-      <OutlinedButton color='#FE6B8B' border='solid 2px #FE6B8B' onClick={() => removePost()}>Remove Post</OutlinedButton>
+      <Link to={`/post/${id}/edit`} className={styles.link}><OutlinedButton color='#ac7871' border='solid 2px #ac7871'>Edit Post</OutlinedButton></Link>
+      <OutlinedButton color='#ac7871' border='solid 2px #ac7871' onClick={() => removePost()}>Remove Post</OutlinedButton>
     </div>
     : null;
 

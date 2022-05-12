@@ -1,21 +1,45 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+
 import { useSelector, useDispatch } from 'react-redux';
+
 import { updateUser } from '../../redux/usersRedux';
 import { getUser } from '../../redux/usersRedux';
+
 import { Link } from 'react-router-dom';
-import { Select, MenuItem } from '@material-ui/core';
+
+import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
 import CommonButton from '../CommonButton/CommonButton';
-import styles from './Header.module.scss';
+
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
+
+import styles from './Header.module.scss';
+
+const useStyles = makeStyles((theme) => ({
+  whiteColor: {
+    color: theme.palette.common.white,
+  },
+  selectMenu: {
+    color: theme.palette.common.white,
+  },
+  label: {
+    color: theme.palette.common.white,
+  },
+  underline: {
+    borderBottom: `2px solid ${theme.palette.common.white}`,
+  },
+}));
 
 const Header = () => {
 
+  const classes = useStyles();
+
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
-  const user = useSelector(state => getUser(state));
-
   const dispatch = useDispatch();
+
+  const user = useSelector(state => getUser(state));
 
   const [userRole, setUserRole] = useState('guest');
 
@@ -48,9 +72,9 @@ const Header = () => {
 
   const userButtons = () => user.role === 'admin' || user.role === 'loggedUser'
     ?
-    <div>
-      <Link to={`/myposts`} className={styles.link}><CommonButton>My posts</CommonButton></Link>
-      <Link to={`/post/add`} className={styles.link}><CommonButton>Add Post</CommonButton></Link>
+    <div className={styles.linkDiv}>
+      <Link to={`/myposts`} className={styles.link}>My posts</Link>
+      <Link to={`/post/add`} className={styles.link}>Add Post</Link>
     </div>
     : null;
 
@@ -59,36 +83,52 @@ const Header = () => {
       <div>
         <Link to={`/`} className={styles.link}><h1>Bulletin Board</h1></Link>
       </div>
-      <div className={styles.navlinks}>
-        <Select
-          labelId="role-select-label"
-          id="role-select"
-          value={userRole}
-          onChange={handleChange}
-        >
-          <MenuItem value={'guest'}>Guest</MenuItem>
-          <MenuItem value={'admin'}>Admin</MenuItem>
-          <MenuItem value={'loggedUser'}>LoggedUser</MenuItem>
-        </Select>
-        <Link to={`/allposts`} className={styles.link}><CommonButton>All posts</CommonButton></Link>
+      <div className={styles.buttons}>
+        <div className={styles.linkDiv}>
+          <Link to={`/allposts`} className={styles.link}>All posts</Link>
+        </div>
         {userButtons()}
-        <GoogleLogin
-          clientId={clientId}
-          buttonText="Login"
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy={'single_host_origin'}
-          isSignedIn={true}
-        ></GoogleLogin>
-        <GoogleLogout
-          clientId={clientId}
-          buttonText="Logout"
-          onLogoutSuccess={logout}
-        >
-        </GoogleLogout>
+        <div className={styles.googleButtons}>
+          <GoogleLogin
+            clientId={clientId}
+            buttonText="Login"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={'single_host_origin'}
+            isSignedIn={true}
+            className={styles.googleButtons}
+          ></GoogleLogin>
+          <GoogleLogout
+            clientId={clientId}
+            buttonText="Logout"
+            onLogoutSuccess={logout}
+          >
+          </GoogleLogout>
+        </div>
+        <FormControl classes={{
+          root: classes.whiteColor,
+        }}>
+          <InputLabel id="role-select-label" classes={{ root: classes.whiteColor }}>Role</InputLabel>
+          <Select
+            labelId="role-select-label"
+            id="role-select"
+            value={userRole}
+            onChange={handleChange}
+            classes={{
+              root: classes.whiteColor,
+              icon: classes.whiteColor,
+              select: classes.underline,
+            }}
+          >
+            <MenuItem value={'guest'}>Guest</MenuItem>
+            <MenuItem value={'admin'}>Admin</MenuItem>
+            <MenuItem value={'loggedUser'}>LoggedUser</MenuItem>
+          </Select>
+        </FormControl>
       </div>
     </div>
   );
 };
 
 export default Header;
+// root,select,filled,outlined,selectMenu,disabled,icon,iconOpen,iconFilled,iconOutlined,nativeInput.
