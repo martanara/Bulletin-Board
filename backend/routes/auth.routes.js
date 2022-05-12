@@ -8,14 +8,14 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get(
   '/google/callback',
   passport.authenticate('google', {
-    successRedirect: 'http://localhost:3000/',
-    failureRedirect: 'http://localhost:3000/',
+    successRedirect: '/',
+    failureRedirect: '/',
   })
 );
 
 router.get('/google/auth.logout', (req, res) => {
   req.logout();
-  res.redirect('http://localhost:3000/');
+  res.redirect('/');
 });
 
 // this route is just used to get the user basic info

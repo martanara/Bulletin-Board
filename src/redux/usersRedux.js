@@ -2,7 +2,7 @@ import axios from 'axios';
 import { API_URL_USERS } from '../config';
 
 /* selectors */
-export const getUser = ({ user }) => user;
+export const getUser = ({ users }) => users;
 
 /* action name creator */
 const reducerName = 'users';
@@ -44,17 +44,3 @@ export const reducer = (statePart = [], action = {}) => {
       return statePart;
   }
 };
-
-// export const fetchUser = () => {
-//   return (dispatch) => {
-
-//     axios
-//       .get(`${API_URL_USERS}/user`)
-//       .then(res => {
-//         console.log('redux user data', res.data);
-//       })
-//       .catch(err => {
-//         console.log(err);
-//       });
-//   };
-// };

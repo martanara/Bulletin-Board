@@ -6,13 +6,14 @@ import { fetchAllPosts } from './redux/postsRedux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createTheme, StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
-import MainLayout from './components/layout/MainLayout/MainLayout';
-import Homepage from './components/views/Homepage/Homepage';
-import Post from './components/views/Post/Post';
-import PostEdit from './components/views/PostEdit/PostEdit';
-import PostAdd from './components/views/PostAdd/PostAdd';
-import NotFound from './components/views/NotFound/NotFound';
-import MyPosts from './components/features/MyPosts/MyPosts';
+import MainLayout from './components/MainLayout/MainLayout';
+import Homepage from './components/Homepage/Homepage';
+import Post from './components/Post/Post';
+import PostEdit from './components/PostEdit/PostEdit';
+import PostAdd from './components/PostAdd/PostAdd';
+import NotFound from './components/NotFound/NotFound';
+import MyPosts from './components//MyPosts/MyPosts';
+import AllPosts from './components/AllPosts/AllPosts';
 
 const theme = createTheme({
   palette: {
@@ -38,6 +39,7 @@ const App = () => {
           <MainLayout>
             <Routes>
               <Route exact path='/' element={<Homepage/>} />
+              <Route exact path='/allposts' element={<AllPosts/>} />
               <Route exact path='/post/add' element={<PostAdd/>} />
               <Route exact path='/post/:id' element={<Post/>} />
               <Route exact path='/post/:id/edit' element={<PostEdit/>} />
@@ -50,6 +52,5 @@ const App = () => {
     </BrowserRouter>
   );
 };
-
 
 export default App;

@@ -1,0 +1,17 @@
+@import '../../styles/settings.scss';
+
+.root {
+  margin-top: 40px;
+  min-height: 80px;
+  padding: 5px 25px;
+  background-color: $main;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    color: $light;
+    font-size: $base-size;
+    font-weight: 700;
+  }
+}

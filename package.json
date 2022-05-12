@@ -2,6 +2,10 @@
   "name": "bulletin-board",
   "version": "0.1.0",
   "private": true,
+  "engines" : {
+    "npm" : ">=7.0.0",
+    "node" : ">=14.0.0"
+  },
   "scripts": {
     "start": "run-p start:* ",
     "start:server": "cd backend && nodemon server.js",

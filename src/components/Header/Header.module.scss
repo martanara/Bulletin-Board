@@ -1,0 +1,26 @@
+@import '../../styles/settings.scss';
+
+.root {
+  min-height: 80px;
+  padding: 5px 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: $main;
+  align-items: center;
+
+  .link {
+    text-decoration: none;
+  }
+
+  h1 {
+    color: $light;
+    text-transform: uppercase;
+    font-size: $base-size + 5;
+  }
+
+  .navlinks {
+    display: flex;
+    flex-direction: row;
+  }
+}

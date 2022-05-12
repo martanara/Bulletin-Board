@@ -10,23 +10,12 @@ const postsRoutes = require('./routes/posts.routes');
 
 const app = express();
 
-app.use(session({
-  secret: 'anything',
-  resave: true,
-  saveUninitialized: true,
-  cookie: {maxAge: 60 * 60 * 24 * 1000},
-}));
+app.use(session({ secret: 'anything' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 /* MIDDLEWARE */
-app.use(
-  cors({
-    origin: '*',
-    credentials: true, //access-control-allow-credentials:true
-    optionSuccessStatus: 200,
-  })
-);
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -46,7 +35,7 @@ app.use('*', (req, res) => {
 });
 
 /* MONGOOSE */
-mongoose.connect('mongodb://localhost:27017/bulletinBoard', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.rt8m7.mongodb.net/BulletinBoard?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.once('open', () => {
   console.log('Successfully connected to the database');
@@ -58,10 +47,3 @@ const port = process.env.PORT || 8000;
 app.listen(port, () => {
   console.log('Server is running on port: '+port);
 });
-
-
-// app.use(session({
-//   secret: process.env.APP_SECRET,
-//   resave: false,
-//   saveUninitialized: false,
-// }));

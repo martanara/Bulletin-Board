@@ -1,7 +1,7 @@
 const utils = {};
 
-utils.dateToStr = function(dateObj){
-  return dateObj.toISOString().slice(0, 10);
+utils.dateToStr = function(date){
+  return date.slice(0, 10);
 };
 
 export default utils;

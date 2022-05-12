@@ -1,4 +1,4 @@
-import {createStore, applyMiddleware} from 'redux';
+import {combineReducers, createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -6,38 +6,26 @@ import { initialState } from './initialState';
 import { reducer as postsReducer } from './postsRedux';
 import { reducer as usersReducer } from './usersRedux';
 
-import { persistStore, persistCombineReducers } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-
-const persistConfig = {
-  key: 'root',
-  storage,
-};
-
 // define reducers
-
-const rootReducer = {
+const reducers = {
   posts: postsReducer,
-  user: usersReducer,
+  users: usersReducer,
 };
 
 // add blank reducers for initial state properties without reducers
 Object.keys(initialState).forEach(item => {
-  if (typeof rootReducer[item] == 'undefined') {
-    rootReducer[item] = (statePart = null) => statePart;
+  if (typeof reducers[item] == 'undefined') {
+    reducers[item] = (statePart = null) => statePart;
   }
 });
 
-const persistCombinedReducers = persistCombineReducers(persistConfig, rootReducer);
+const combinedReducers = combineReducers(reducers);
 
-export default () => {
-  let store = createStore(
-    persistCombinedReducers,
-    initialState,
-    composeWithDevTools(
-      applyMiddleware(thunk)
-    )
-  );
-  let persistor = persistStore(store);
-  return { store, persistor };
-};
+// create store
+export const store = createStore(
+  combinedReducers,
+  initialState,
+  composeWithDevTools(
+    applyMiddleware(thunk)
+  )
+);
