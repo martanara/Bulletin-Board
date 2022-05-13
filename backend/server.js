@@ -2,17 +2,17 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
-const passport = require('passport');
-const session = require('express-session');
-const passportConfig = require('./config/passport');
+//const passport = require('passport');
+//const session = require('express-session');
+//const passportConfig = require('./config/passport');
 const usersRoutes = require('./routes/users.routes');
 const postsRoutes = require('./routes/posts.routes');
 
 const app = express();
 
-app.use(session({ secret: 'anything' }));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(session({ secret: 'anything' }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 /* MIDDLEWARE */
 app.use(cors());
