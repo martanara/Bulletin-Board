@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
 const passportConfig = require('./config/passport');
-const authRoutes = require('./routes/auth.routes');
+const usersRoutes = require('./routes/users.routes');
 const postsRoutes = require('./routes/posts.routes');
 
 const app = express();
@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 
 /* API ENDPOINTS */
 app.use('/api', postsRoutes);
-app.use('/auth', authRoutes);
+app.use('/api', usersRoutes);
 
 /* API ERROR PAGES */
 app.use('/api', (req, res) => {

@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from './Post.module.scss';
 import PlaceOutlinedIcon from '@material-ui/icons/PlaceOutlined';
 import OutlinedButton from '../OutlinedButton/OutlinedButton';
-import { getUser } from '../../redux/usersRedux';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import utils from '../../utils';
@@ -14,7 +13,9 @@ import Container from '@material-ui/core/Container';
 const Post = () => {
   const { id } = useParams();
   const post = useSelector(state => getPostById(state, id));
-  const user = useSelector(state => getUser(state));
+  const user = {
+    role: 'admin',
+  };
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Post = () => {
     navigate('/');
   };
 
-  const editButton  = () => user.role === 'admin' || user.email === post.author
+  const editButton  = () => user.role === 'admin'
     ?
     <div className={styles.editButton}>
       <Link to={`/post/${id}/edit`} className={styles.link}><OutlinedButton color='#ac7871' border='solid 2px #ac7871'>Edit Post</OutlinedButton></Link>

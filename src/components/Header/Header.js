@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { updateUser } from '../../redux/usersRedux';
-import { getUser } from '../../redux/usersRedux';
+import { getLoggedUser, addUserRequest, loginUser, logoutUser } from '../../redux/usersRedux';
 
 import { Link } from 'react-router-dom';
 
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
-import CommonButton from '../CommonButton/CommonButton';
 
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
@@ -32,103 +30,113 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = () => {
-
   const classes = useStyles();
 
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const user = useSelector(state => getUser(state));
+  const loggedInUser = useSelector(state => getLoggedUser(state));
+  console.log('loggedInUser', loggedInUser);
 
-  const [userRole, setUserRole] = useState('guest');
+  const [role, setRole] = useState('guest');
 
-  const handleChange = (event) => {
-    const user = {
-      name: 'Logged User',
-      email: 'logged@user.com',
-      role: event.target.value,
-    };
-    dispatch(updateUser(user));
-    setUserRole(event.target.value);
+
+  useEffect(() => {
+    if(role === 'loggedUser'){
+      const user = {
+        name: 'Logged User',
+        email: 'loggedUser@example.com',
+        role: 'loggedUser',
+      };
+      dispatch(loginUser(user));
+      navigate('/myposts');
+    } else {
+      dispatch(logoutUser());
+      navigate('/');
+    }
+  // eslint-disable-next-line
+  }, [role]);
+
+
+  const loginGoogle = (res) => {
+    const { email, name } = res.profileObj;
+    const user = { name, email, role: 'googleUser'};
+    dispatch(addUserRequest(user));
+    dispatch(loginUser(user));
+    navigate('/myposts');
   };
 
   const responseGoogle = (res) => {
-    const { email, name } = res.profileObj;
-    const user = { name, email, role: 'loggedUser'};
-    dispatch(updateUser(user));
-    setUserRole('loggedUser');
+    console.log(res);
   };
 
-  const logout = () => {
-    const user = {
-      role: 'guest',
-      email: 'gues@gues.com',
-      name: 'Guest',
-    };
-    dispatch(updateUser(user));
-    setUserRole('loggedUser');
+  const logoutGoogle = () => {
+    dispatch(logoutUser());
+    navigate('/');
   };
 
-  const userButtons = () => user.role === 'admin' || user.role === 'loggedUser'
-    ?
-    <div className={styles.linkDiv}>
-      <Link to={`/myposts`} className={styles.link}>My posts</Link>
-      <Link to={`/post/add`} className={styles.link}>Add Post</Link>
-    </div>
+  const loginGoogleButton = () => !loggedInUser.role ?
+    (
+      <GoogleLogin
+        clientId={clientId}
+        buttonText="Login"
+        onSuccess={loginGoogle}
+        onFailure={responseGoogle}
+        cookiePolicy={'single_host_origin'}
+        isSignedIn={true}
+        className={styles.navItem}
+      ></GoogleLogin>
+    )
+    : null;
+
+  const loginSelect = () => !loggedInUser.role || loggedInUser.role !== 'googleUser' ?
+    (
+      <FormControl classes={{ root: classes.whiteColor}} className={styles.navSelect}>
+        <InputLabel id="role-select-label" classes={{ root: classes.whiteColor }}>Role</InputLabel>
+        <Select
+          labelId="role-select-label"
+          id="role-select"
+          value={role}
+          onChange={e => setRole(e.target.value)}
+          classes={{
+            root: classes.whiteColor,
+            icon: classes.whiteColor,
+            select: classes.underline,
+          }}
+        >
+          <MenuItem value={'guest'}>Guest</MenuItem>
+          <MenuItem value={'loggedUser'}>LoggedUser</MenuItem>
+        </Select>
+      </FormControl>
+    )
+    : null;
+
+  const logoutGoogleButton = () => loggedInUser.role === 'googleUser' ?
+    (
+      <GoogleLogout
+        clientId={clientId}
+        buttonText="Logout"
+        onLogoutSuccess={logoutGoogle}
+        className={styles.navItem}
+      >
+      </GoogleLogout>
+    )
     : null;
 
   return (
     <div className={styles.root}>
-      <div>
-        <Link to={`/`} className={styles.link}><h1>Bulletin Board</h1></Link>
-      </div>
-      <div className={styles.buttons}>
-        <div className={styles.linkDiv}>
-          <Link to={`/allposts`} className={styles.link}>All posts</Link>
-        </div>
-        {userButtons()}
-        <div className={styles.googleButtons}>
-          <GoogleLogin
-            clientId={clientId}
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy={'single_host_origin'}
-            isSignedIn={true}
-            className={styles.googleButtons}
-          ></GoogleLogin>
-          <GoogleLogout
-            clientId={clientId}
-            buttonText="Logout"
-            onLogoutSuccess={logout}
-          >
-          </GoogleLogout>
-        </div>
-        <FormControl classes={{
-          root: classes.whiteColor,
-        }}>
-          <InputLabel id="role-select-label" classes={{ root: classes.whiteColor }}>Role</InputLabel>
-          <Select
-            labelId="role-select-label"
-            id="role-select"
-            value={userRole}
-            onChange={handleChange}
-            classes={{
-              root: classes.whiteColor,
-              icon: classes.whiteColor,
-              select: classes.underline,
-            }}
-          >
-            <MenuItem value={'guest'}>Guest</MenuItem>
-            <MenuItem value={'admin'}>Admin</MenuItem>
-            <MenuItem value={'loggedUser'}>LoggedUser</MenuItem>
-          </Select>
-        </FormControl>
+      <Link to={`/`} className={styles.headerLink}><h1>Bulletin Board</h1></Link>
+      <div className={styles.navlinks}>
+        <Link to={`/allposts`} className={styles.link}>All posts</Link>
+        <Link to={`/myposts`} className={styles.link}>My posts</Link>
+        {loginGoogleButton()}
+        {logoutGoogleButton()}
+        {loginSelect()}
       </div>
     </div>
   );
 };
 
 export default Header;
-// root,select,filled,outlined,selectMenu,disabled,icon,iconOpen,iconFilled,iconOutlined,nativeInput.

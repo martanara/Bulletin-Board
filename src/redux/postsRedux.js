@@ -1,14 +1,9 @@
 import axios from 'axios';
-import { API_URL_POSTS } from '../config';
-import uniqid from 'uniqid';
+import { API_URL } from '../config';
 
 /* selectors */
-export const getAllPosts = ({posts}) => posts.data;
-export const getMyPosts = ({posts}, user) => {
-  console.log(user);
-  if (user.role === 'admin') return posts.data;
-  else return posts.data.filter(post => post.author === user.email);
-};
+export const getAllPosts = ({posts}) => (posts.data).sort((a, b) => a.post.created > b.post.created);
+export const getMyPosts = ({posts}, email) => posts.data.filter(post => post.author === email);
 export const getAllPublished = ({posts}) => posts.data.filter(post => post.status === 'published');
 export const getPostById = ({ posts }, postId) => (posts.data).find(post => post._id === postId);
 
@@ -45,7 +40,7 @@ export const fetchAllPosts = () => {
     dispatch(fetchStarted());
 
     axios
-      .get(`${API_URL_POSTS}/posts`)
+      .get(`${API_URL}/posts`)
       .then(res => {
         dispatch(fetchSuccess(res.data));
       })
@@ -60,7 +55,7 @@ export const addPostRequest = (post) => async dispatch => {
     dispatch(fetchStarted());
     const res = await axios({
       method: 'post',
-      url: `${API_URL_POSTS}/posts`,
+      url: `${API_URL}/posts`,
       data: post,
       headers: { 'Content-Type': 'multipart/form-data' },
     });
@@ -75,7 +70,7 @@ export const updatePostRequest = (post, id) => async dispatch => {
     dispatch(fetchStarted());
     const res = await axios({
       method: 'put',
-      url: `${API_URL_POSTS}/post/${id}`,
+      url: `${API_URL}/post/${id}`,
       data: post,
       headers: { 'Content-Type': 'multipart/form-data' },
     });
@@ -90,7 +85,7 @@ export const removePostRequest = (postId) => {
     dispatch(fetchStarted());
 
     axios
-      .delete(`${API_URL_POSTS}/post/${postId}`)
+      .delete(`${API_URL}/post/${postId}`)
       .then(res => {
         dispatch(removePost(res.data));
       })
@@ -112,7 +107,7 @@ export const reducer = (statePart = [], action = {}) => {
           active: false,
           error: false,
         },
-        data: [...statePart.data, { ...action.payload, id: uniqid() }],
+        data: [...statePart.data, { ...action.payload}],
       };
     case REMOVE_POST:
       return {

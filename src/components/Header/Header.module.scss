@@ -2,14 +2,23 @@
 
 .root {
   min-height: 80px;
-  padding: 5px 25px;
+  padding: 10px 30px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   background-color: $main;
   align-items: center;
 
+  .headerLink {
+    text-decoration: none;
+  }
+
   .link {
+    color: $light;
+    text-transform: uppercase;
+    font-size: $base-size;
+    font-weight: 700;
+    margin-left: 40px;
     text-decoration: none;
   }
 
@@ -19,28 +28,16 @@
     font-size: $base-size + 5;
   }
 
-  .buttons {
+  .navlinks {
     display: flex;
     flex-direction: row;
-
-    .linkDiv {
-      display: flex;
-      align-items: center;
-
-      .link {
-        text-decoration: none;
-        color: $light;
-        font-size: $base-size;
-        text-transform: uppercase;
-        font-weight: 700;
-        margin: 0 20px;
-      }
-  }
-    .googleButtons {
-      margin-right: 20px;
+    justify-content: center;
+    align-items: center;
+    .navItem {
+      margin-left: 40px;
     }
-    .select {
-      margin-left: 400px;
+    .navSelect {
+      margin: 0 0 15px 40px;
     }
   }
 }

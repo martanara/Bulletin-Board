@@ -19,8 +19,6 @@ export const initialState = {
     },
   },
   users: {
-    role: 'guest',
-    email: 'guest@guest.com',
-    name: 'Guest',
+    data: {},
   },
 };

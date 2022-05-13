@@ -2,11 +2,13 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import { TextField } from '@material-ui/core';
 
 import ImageUploader from 'react-images-upload';
 import { useForm } from 'react-hook-form';
+import { getLoggedUser } from '../../redux/usersRedux';
 
 import CommonButton from '../CommonButton/CommonButton';
 import styles from './PostForm.module.scss';
@@ -14,9 +16,10 @@ import styles from './PostForm.module.scss';
 const PostForm = (props) => {
   const { register, handleSubmit: validate, formState: { errors } } = useForm();
 
+  const loggedInUser = useSelector(state => getLoggedUser(state));
+
   const [title, setTitle] = useState(props.title || '');
   const [text, setDescription] = useState(props.text || '');
-  const [author, setAuthor] = useState(props.author || '');
   const [image, setImage] = useState(props.image || '');
   const [status, setStatus] = useState('draft');
   const [price, setPrice] = useState(props.price || '');
@@ -25,6 +28,7 @@ const PostForm = (props) => {
 
   const created = props.created || new Date();
   const updated = new Date();
+  const author = loggedInUser.email;
 
   const handleImageUpload = (files) => {
     setImage(files[0]);
@@ -41,7 +45,6 @@ const PostForm = (props) => {
     for(let key of ['title', 'text', 'created', 'updated','author', 'status', 'image', 'price', 'phone', 'location']) {
       formData.append(key, post[key]);
     }
-
     props.action(formData);
   };
 
@@ -81,17 +84,6 @@ const PostForm = (props) => {
           onChange={e => setDescription(e.target.value)}
         />
         {errors.text && <span>This field is required. text can have up to 300 characters.</span>}
-        <TextField
-          style={{ width: '200px', margin: '5px' }}
-          {...register('author', { required: true, pattern: /^\S+@\S+\.\S+$/ })}
-          required
-          type='text'
-          label='email'
-          variant='outlined'
-          value={author}
-          onChange={e => setAuthor(e.target.value)}
-        />
-        {errors.author && <span>Please enter a valid author</span>}
         <TextField
           style={{ width: '200px', margin: '5px' }}
           {...register('price', { required: true, min: 1 })}

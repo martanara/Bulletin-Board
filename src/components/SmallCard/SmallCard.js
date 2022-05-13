@@ -22,15 +22,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SmallCard = (props) => {
-
   const classes = useStyles();
-
   return (
     <Card className={classes.root} elevation={2}>
       <CardHeader
         className={classes.header}
         title={props.title}
-        subheader={utils.dateToStr(props.updated)|| utils.dateToStr(props.created)}
+        subheader={`Published: ${utils.dateToStr(props.created)}`}
       />
       <CardMedia
         component="img"
