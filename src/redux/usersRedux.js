@@ -27,7 +27,6 @@ export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 /* thunk creators */
 
 export const addUserRequest = (userData) => async dispatch => {
-  console.log('userData', userData);
   try {
     dispatch(fetchStarted());
     const res = await axios({

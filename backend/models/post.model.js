@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
-  author: { type: String, required: true },
+  email: { type: String, required: true },
   created: { type: Date, required: true },
   updated: { type: Date, required: true },
   status: { type: String, required: true },
@@ -11,6 +11,7 @@ const postSchema = new mongoose.Schema({
   price: { type: Number },
   phone: { type: String },
   location: { type: String },
+  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 
 module.exports = mongoose.model('Post', postSchema);

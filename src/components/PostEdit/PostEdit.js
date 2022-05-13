@@ -27,7 +27,6 @@ const PostEdit = () => {
       text={postData.text}
       created={postData.created}
       updated={postData.updated}
-      author={postData.author}
       status={postData.status}
       image={postData.image}
       price={postData.price}

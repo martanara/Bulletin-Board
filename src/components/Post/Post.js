@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { getPostById, removePostRequest } from '../../redux/postsRedux';
+import { getLoggedUser } from '../../redux/usersRedux';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './Post.module.scss';
 import PlaceOutlinedIcon from '@material-ui/icons/PlaceOutlined';
@@ -13,9 +14,7 @@ import Container from '@material-ui/core/Container';
 const Post = () => {
   const { id } = useParams();
   const post = useSelector(state => getPostById(state, id));
-  const user = {
-    role: 'admin',
-  };
+  const loggedInUser = useSelector(state => getLoggedUser(state));
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,7 +24,7 @@ const Post = () => {
     navigate('/');
   };
 
-  const editButton  = () => user.role === 'admin'
+  const editButton  = () => loggedInUser.email === post.email
     ?
     <div className={styles.editButton}>
       <Link to={`/post/${id}/edit`} className={styles.link}><OutlinedButton color='#ac7871' border='solid 2px #ac7871'>Edit Post</OutlinedButton></Link>
@@ -56,7 +55,7 @@ const Post = () => {
             </div>
             <div className={styles.contactInfo}>
               <h3>Contact info:</h3>
-              <p><span>author:</span> {post.author}</p>
+              <p><span>email:</span> {post.email}</p>
               <p><span>phone number:</span> {post.phone}</p>
             </div>
             <div className={styles.dates}>

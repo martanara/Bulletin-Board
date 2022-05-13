@@ -20,8 +20,6 @@ const theme = createTheme({
   },
 });
 
-console.log(theme);
-
 const App = () => {
   const dispatch = useDispatch();
 

@@ -38,7 +38,6 @@ const Header = () => {
   const navigate = useNavigate();
 
   const loggedInUser = useSelector(state => getLoggedUser(state));
-  console.log('loggedInUser', loggedInUser);
 
   const [role, setRole] = useState('guest');
 

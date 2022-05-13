@@ -28,7 +28,7 @@ const PostForm = (props) => {
 
   const created = props.created || new Date();
   const updated = new Date();
-  const author = loggedInUser.email;
+  const email = loggedInUser.email;
 
   const handleImageUpload = (files) => {
     setImage(files[0]);
@@ -39,10 +39,10 @@ const PostForm = (props) => {
   };
 
   const handleSubmit = () => {
-    const post = { title, text, created, updated, author, status, image, price, phone, location };
+    const post = { title, text, created, updated, email, status, image, price, phone, location };
     const formData = new FormData();
 
-    for(let key of ['title', 'text', 'created', 'updated','author', 'status', 'image', 'price', 'phone', 'location']) {
+    for(let key of ['title', 'text', 'created', 'updated','email', 'status', 'image', 'price', 'phone', 'location']) {
       formData.append(key, post[key]);
     }
     props.action(formData);
@@ -131,7 +131,6 @@ PostForm.propTypes = {
     text: PropTypes.string.isRequired,
     created: PropTypes.string.isRequired,
     updated: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
     image: PropTypes.string,
     price: PropTypes.string,
