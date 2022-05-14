@@ -16,7 +16,8 @@ import AllPosts from './components/AllPosts/AllPosts';
 
 const theme = createTheme({
   palette: {
-    primary: { main: '#4381C1' },
+    primary: { main: '#4381C1', light: '#bdadea', dark: '#bea2c2'},
+    secondary: { main: '#FE6B8B', light: '#FF8E53', dark: '#4e4b5c'},
   },
 });
 
@@ -32,13 +33,13 @@ const App = () => {
           <CssBaseline />
           <MainLayout>
             <Routes>
-              <Route exact path='/' element={<Homepage/>} />
               <Route exact path='/allposts' element={<AllPosts/>} />
               <Route exact path='/post/add' element={<PostAdd/>} />
               <Route exact path='/post/:id' element={<Post/>} />
               <Route exact path='/post/:id/edit' element={<PostEdit/>} />
               <Route exact path='/myposts' element={<MyPosts/>} />
               <Route path='*' element={<NotFound/>} />
+              <Route exact path='/' element={<Homepage/>} />
             </Routes>
           </MainLayout>
         </ThemeProvider>

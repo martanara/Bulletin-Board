@@ -1,8 +1,11 @@
 import React from 'react';
-import styles from './Homepage.module.scss';
+
 import LatestPosts from '../LatestPosts/LatestPosts';
 import Hero from '../Hero/Hero';
+
 import Container from '@material-ui/core/Container';
+
+import styles from './Homepage.module.scss';
 
 const Homepage = () => {
   return (

@@ -1,17 +1,19 @@
-/* eslint react/prop-types: 0 */
-
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+
 import { useSelector } from 'react-redux';
+
+import { getLoggedUser } from '../../redux/usersRedux';
 
 import { TextField } from '@material-ui/core';
 
 import ImageUploader from 'react-images-upload';
 import { useForm } from 'react-hook-form';
-import { getLoggedUser } from '../../redux/usersRedux';
 
 import CommonButton from '../CommonButton/CommonButton';
+
 import styles from './PostForm.module.scss';
+
+import PropTypes from 'prop-types';
 
 const PostForm = (props) => {
   const { register, handleSubmit: validate, formState: { errors } } = useForm();
@@ -27,7 +29,8 @@ const PostForm = (props) => {
   const [location, setLocation] = useState(props.location || '');
 
   const created = props.created || new Date();
-  const updated = new Date();
+  const isUpdated = () => props.actionText === 'edit' ? new Date() : undefined;
+  const updated = isUpdated();
   const email = loggedInUser.email;
 
   const handleImageUpload = (files) => {
@@ -60,7 +63,7 @@ const PostForm = (props) => {
           value={title}
           onChange={e => setTitle(e.target.value)}
         />
-        {errors.title && <span>This field is required. Title can have up to 20 characters.</span>}
+        {errors.title && <span className={styles.error}>This field is required. Title can have up to 20 characters.</span>}
         <ImageUploader
           className={styles.imageUploader}
           withIcon={false}
@@ -83,7 +86,7 @@ const PostForm = (props) => {
           value={text}
           onChange={e => setDescription(e.target.value)}
         />
-        {errors.text && <span>This field is required. text can have up to 300 characters.</span>}
+        {errors.text && <span className={styles.error}>This field is required. text can have up to 300 characters.</span>}
         <TextField
           style={{ width: '200px', margin: '5px' }}
           {...register('price', { required: true, min: 1 })}
@@ -94,15 +97,18 @@ const PostForm = (props) => {
           value={price}
           onChange={e => setPrice(e.target.value)}
         />
-        {errors.price && <span>Price is required.</span>}
+        {errors.price && <span className={styles.error}>Price is required.</span>}
         <TextField
+          {...register('phone', {required: true, max: 11, min: 11, maxLength: 11, pattern: /111-222-333/i})}
           style={{ width: '200px', margin: '5px' }}
           type='text'
           label='phone number'
           variant='outlined'
           value={phone}
+          placeholder='111-222-333'
           onChange={e => setPhoneNumber(e.target.value)}
         />
+        {errors.phone && <span className={styles.error}>Please enter phone number in the correct format.</span>}
         <TextField
           style={{ width: '200px', margin: '5px' }}
           type='text'
@@ -126,17 +132,16 @@ const PostForm = (props) => {
 
 PostForm.propTypes = {
   action: PropTypes.func.isRequired,
-  props: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    created: PropTypes.string.isRequired,
-    updated: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
-    image: PropTypes.string,
-    price: PropTypes.string,
-    phone: PropTypes.string,
-    location: PropTypes.string,
-  }),
+  actionText: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  text: PropTypes.string,
+  created: PropTypes.string,
+  updated: PropTypes.string,
+  status: PropTypes.string,
+  image: PropTypes.string,
+  price: PropTypes.string,
+  phone: PropTypes.string,
+  location: PropTypes.string,
 };
 
 export default PostForm;

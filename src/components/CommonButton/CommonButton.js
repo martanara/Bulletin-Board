@@ -1,13 +1,14 @@
 import React from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+
 import PropTypes from 'prop-types';
 
 const CommonButton = (props) => {
-
-  const useStyles = makeStyles({
+  const useStyles = makeStyles((theme) => ({
     root: {
-      background: `linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)`,
+      background: `linear-gradient(45deg, ${theme.palette.secondary.main} 30%, ${theme.palette.secondary.light} 90%)`,
       borderRadius: 3,
       border: 0,
       height: 48,
@@ -16,17 +17,17 @@ const CommonButton = (props) => {
       margin: '0 10px',
     },
     label: {
-      color: '#ffffff',
+      color: `${theme.palette.common.white}`,
       fontSize: 15,
     },
-  });
+  }));
 
   const classes = useStyles();
   return (
     <Button
       classes={{
-        root: classes.root, // class name, e.g. `classes-nesting-root-x`
-        label: classes.label, // class name, e.g. `classes-nesting-label-x`
+        root: classes.root,
+        label: classes.label,
       }}
       type={props.type}
       onClick={props.onClick}

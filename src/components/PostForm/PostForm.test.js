@@ -11,7 +11,7 @@ const action = () => {
 describe('Component PostForm', () => {
   it('should render without crashing', () => {
     const component = shallow(<Provider store={store}>
-      <PostForm action={action}/>
+      <PostForm action={action} actionText='add' />
     </Provider>);
     expect(component).toBeTruthy();
   });

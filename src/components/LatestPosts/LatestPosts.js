@@ -4,7 +4,9 @@ import { useSelector } from 'react-redux';
 import { getAllPublished } from '../../redux/postsRedux';
 import SmallCard from '../SmallCard/SmallCard';
 import { Link } from 'react-router-dom';
+
 import CommonButton from '../CommonButton/CommonButton';
+
 import { Grid } from '@material-ui/core/';
 
 const LatestPosts = () => {

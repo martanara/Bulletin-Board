@@ -2,17 +2,16 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import PropTypes from 'prop-types';
-
-import styles from './SmallCard.module.scss';
-
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardHeader, CardMedia, CardContent, CardActions, Typography } from '@material-ui/core';
 
 import OutlinedButton from '../OutlinedButton/OutlinedButton';
 
-import utils from '../../utils';
+import PropTypes from 'prop-types';
 
+import styles from './SmallCard.module.scss';
+
+import utils from '../../utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,13 +21,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SmallCard = (props) => {
+  const isDraft = () => props.status === 'draft' ?
+    `This is a draft!! Not published yet.` :
+    `Published: ${utils.dateToStr(props.created)}`;
+
+
   const classes = useStyles();
   return (
     <Card className={classes.root} elevation={2}>
       <CardHeader
         className={classes.header}
         title={props.title}
-        subheader={`Published: ${utils.dateToStr(props.created)}`}
+        subheader={isDraft()}
       />
       <CardMedia
         component="img"
@@ -42,7 +46,7 @@ const SmallCard = (props) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Link to={`/post/${props.id}`} className={styles.link}> <OutlinedButton color='#553d67' border='solid 2px #553d67'>Show more</OutlinedButton></Link>
+        <Link to={`/post/${props.id}`} className={styles.link}> <OutlinedButton>Show more</OutlinedButton></Link>
       </CardActions>
     </Card>
   );
@@ -54,6 +58,7 @@ SmallCard.propTypes = {
   updated: PropTypes.string,
   image: PropTypes.string,
   price: PropTypes.number,
+  status: PropTypes.string,
   id: PropTypes.string.isRequired,
 };
 

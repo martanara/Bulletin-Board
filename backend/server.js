@@ -34,8 +34,16 @@ app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
+const NODE_ENV = process.env.NODE_ENV;
+let dbUri = '';
+
 /* MONGOOSE */
-mongoose.connect(`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.rt8m7.mongodb.net/BulletinBoard?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
+
+if(NODE_ENV === 'test') dbUri = 'mongodb://localhost:27017/NewWaveDBtest';
+else dbUri = dbUri = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.rt8m7.mongodb.net/BulletinBoard?retryWrites=true&w=majority`;
+
+mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
+
 const db = mongoose.connection;
 db.once('open', () => {
   console.log('Successfully connected to the database');

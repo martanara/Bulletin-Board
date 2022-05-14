@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+
+import { useNavigate, Link  } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getLoggedUser, addUserRequest, loginUser, logoutUser } from '../../redux/usersRedux';
-
-import { Link } from 'react-router-dom';
 
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -41,9 +40,8 @@ const Header = () => {
 
   const [role, setRole] = useState('guest');
 
-
-  useEffect(() => {
-    if(role === 'loggedUser'){
+  const handleRoleChange = (event) => {
+    if(event.target.value === 'loggedUser'){
       const user = {
         name: 'Logged User',
         email: 'loggedUser@example.com',
@@ -55,9 +53,8 @@ const Header = () => {
       dispatch(logoutUser());
       navigate('/');
     }
-  // eslint-disable-next-line
-  }, [role]);
-
+    setRole(event.target.value);
+  };
 
   const loginGoogle = (res) => {
     const { email, name } = res.profileObj;
@@ -68,7 +65,7 @@ const Header = () => {
   };
 
   const responseGoogle = (res) => {
-    console.log(res);
+    //console.log(res);
   };
 
   const logoutGoogle = () => {
@@ -98,7 +95,7 @@ const Header = () => {
           labelId="role-select-label"
           id="role-select"
           value={role}
-          onChange={e => setRole(e.target.value)}
+          onChange={handleRoleChange}
           classes={{
             root: classes.whiteColor,
             icon: classes.whiteColor,

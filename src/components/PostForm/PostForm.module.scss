@@ -5,6 +5,12 @@
   display: flex;
   justify-content: center;
 
+  span {
+    margin-left: 20px;
+    color: $warning;
+    font-size: $base-size;
+  }
+
   .form {
     padding: 30px 10px;
     width: 700px;

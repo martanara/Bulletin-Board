@@ -29,15 +29,24 @@ exports.addNewPost = async (req, res) => {
   const { email, created, updated, status, title, text, image, price, phone, location } = req.body;
   const file = req.file;
   let fileName = '';
-  if (file) fileName = file.path.split('/').slice(-1)[0];
+  if(file) fileName = file.path.split('/').slice(-1)[0];
 
-
-  try {
-    const newPost = new Post({ email, created, updated, status, title, text, image: fileName, price, phone, location });
-    await newPost.save();
-    res.json(newPost);
-  } catch(err) {
-    res.status(500).json({ message: err });
+  if(updated === 'undefined'){
+    try {
+      const newPost = new Post({ email, created, status, title, text, image: fileName, price, phone, location });
+      await newPost.save();
+      res.json(newPost);
+    } catch(err) {
+      res.status(500).json({ message: err });
+    }
+  } else {
+    try {
+      const newPost = new Post({ email, created, updated, status, title, text, image: fileName, price, phone, location });
+      await newPost.save();
+      res.json(newPost);
+    } catch(err) {
+      res.status(500).json({ message: err });
+    }
   }
 };
 

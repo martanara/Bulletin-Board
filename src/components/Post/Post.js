@@ -1,15 +1,22 @@
 import React from 'react';
+
 import { useParams } from 'react-router';
+
+import { Link, useNavigate } from 'react-router-dom';
+
+import { useSelector, useDispatch } from 'react-redux';
+
 import { getPostById, removePostRequest } from '../../redux/postsRedux';
 import { getLoggedUser } from '../../redux/usersRedux';
-import { useSelector, useDispatch } from 'react-redux';
-import styles from './Post.module.scss';
+
+import CommonButton from '../CommonButton/CommonButton';
+
 import PlaceOutlinedIcon from '@material-ui/icons/PlaceOutlined';
-import OutlinedButton from '../OutlinedButton/OutlinedButton';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import utils from '../../utils';
 import Container from '@material-ui/core/Container';
+
+import styles from './Post.module.scss';
+
+import utils from '../../utils';
 
 const Post = () => {
   const { id } = useParams();
@@ -24,18 +31,22 @@ const Post = () => {
     navigate('/');
   };
 
-  const editButton  = () => loggedInUser.email === post.email
-    ?
+  const editButton = () => loggedInUser.email === post.email &&
     <div className={styles.editButton}>
-      <Link to={`/post/${id}/edit`} className={styles.link}><OutlinedButton color='#ac7871' border='solid 2px #ac7871'>Edit Post</OutlinedButton></Link>
-      <OutlinedButton color='#ac7871' border='solid 2px #ac7871' onClick={() => removePost()}>Remove Post</OutlinedButton>
-    </div>
-    : null;
+      <Link to={`/post/${id}/edit`} className={styles.link}><CommonButton>Edit Post</CommonButton></Link>
+      <CommonButton onClick={() => removePost()}>Remove Post</CommonButton>
+    </div>;
+
+  const isDraft = () => post.status === 'draft' &&
+    <div className={styles.draftWarning}>
+      <p>This post is a draft! Click on &apos;Edit Post&apos; to publish.</p>
+    </div>;
 
   return (
     <Container>
       <div className={styles.root}>
         <div className={styles.postContainer}>
+          {isDraft()}
           <div className={styles.imageContainer}>
             <img alt={post.title} src={post.image ? `/images/` + post.image : 'https://www.freeiconspng.com/uploads/no-image-icon-1.jpg'}/>
           </div>
@@ -59,9 +70,8 @@ const Post = () => {
               <p><span>phone number:</span> {post.phone}</p>
             </div>
             <div className={styles.dates}>
-              <p>Published:{utils.dateToStr(post.created)} {post.updated && (<span>Edited:{utils.dateToStr(post.updated)}</span>)}</p>
+              <p>Published: {utils.dateToStr(post.created)} {post.updated && (<span>Edited: {utils.dateToStr(post.updated)}</span>)}</p>
             </div>
-            {post.status === 'draft' && (<p>This post is a draft! Edit to publish.</p>)}
             {editButton()}
           </div>
         </div>

@@ -20,6 +20,14 @@
     flex-direction: column;
     border: solid 1px $secondary-light;
 
+    .draftWarning {
+      text-align: center;
+      p {
+        color: $warning;
+        font-size: $base-size;
+      }
+    }
+
     .imageContainer {
       height: 300px;
       width: 95%;

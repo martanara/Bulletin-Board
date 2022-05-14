@@ -1,12 +1,17 @@
 import React from 'react';
-import PostsView from '../PostsView/PostsView';
+
+import { Link } from 'react-router-dom';
+
 import { useSelector } from 'react-redux';
 import { getMyPosts } from '../../redux/postsRedux';
-import Container from '@material-ui/core/Container';
 import { getLoggedUser } from '../../redux/usersRedux';
-import styles from './MyPosts.module.scss';
+
+import PostsView from '../PostsView/PostsView';
 import CommonButton from '../CommonButton/CommonButton';
-import { Link } from 'react-router-dom';
+
+import Container from '@material-ui/core/Container';
+
+import styles from './MyPosts.module.scss';
 
 const MyPosts = () => {
   const loggedInUser = useSelector(state => getLoggedUser(state));
@@ -27,13 +32,16 @@ const MyPosts = () => {
       </div>
     );
 
+  const postAddButton = () => loggedInUser.name &&
+    <div className={styles.addButton}>
+      <Link to={`/post/add`} className={styles.link}><CommonButton>Add Post</CommonButton></Link>
+    </div>;
+
   return (
     <Container className={styles.root}>
       <div className={styles.welcome}>
         {welcomeMessage()}
-        <div className={styles.addButton}>
-          <Link to={`/post/add`} className={styles.link}><CommonButton>Add Post</CommonButton></Link>
-        </div>
+        {postAddButton()}
       </div>
       <PostsView posts={posts}/>
     </Container>

@@ -1,5 +1,14 @@
 @import '../../styles/settings.scss';
 
+
+.draftWarning {
+  text-align: center;
+  color: $warning;
+  font-size: $base-size;
+}
+
 .link {
   text-decoration: none;
 }
+
+

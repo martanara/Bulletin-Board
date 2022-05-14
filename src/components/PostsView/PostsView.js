@@ -9,7 +9,6 @@ import SmallCard from '../SmallCard/SmallCard';
 import styles from './PostsView.module.scss';
 
 const PostsView = ({ posts }) => {
-
   return (
     <div className={styles.root}>
       <Grid container spacing={3}>
