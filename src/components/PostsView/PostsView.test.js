@@ -16,7 +16,7 @@ const posts = [{
   location: null,
 }];
 
-describe('Component MainLayout', () => {
+describe('Component PostsView', () => {
   it('should render without crashing', () => {
     const component = shallow(<PostsView posts={posts} />);
     expect(component).toBeTruthy();

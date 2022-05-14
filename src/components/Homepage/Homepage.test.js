@@ -1,10 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Homepage from './Homepage';
+import { Provider } from 'react-redux';
+import { store } from  '../../redux/store';
 
 describe('Component Homepage', () => {
   it('should render without crashing', () => {
-    const component = shallow(<Homepage />);
+    const component = shallow(<Provider store={store}>
+      <Homepage />
+    </Provider>);
     expect(component).toBeTruthy();
   });
 });
+

@@ -28,7 +28,7 @@ const Post = () => {
 
   const removePost = () => {
     dispatch(removePostRequest(id));
-    navigate('/');
+    navigate('/myposts');
   };
 
   const editButton = () => loggedInUser.email === post.email &&

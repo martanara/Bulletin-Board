@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Footer from './Footer';
+import Spinner from './Spinner';
 
-describe('Component Footer', () => {
+describe('Component Spinner', () => {
   it('should render without crashing', () => {
-    const component = shallow(<Footer />);
+    const component = shallow(<Spinner />);
     expect(component).toBeTruthy();
   });
 });

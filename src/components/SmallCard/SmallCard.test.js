@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import SmallCard from './SmallCard';
 
-describe('Component MainLayout', () => {
+describe('Component SmallCard', () => {
   it('should render without crashing', () => {
     const component = shallow(<SmallCard
       title="title"

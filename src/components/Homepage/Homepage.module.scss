@@ -1,4 +1,9 @@
 @import '../../styles/settings.scss';
 
-// .root {
-// }
+.root {
+  min-height: 100vs;
+  .spinner {
+    text-align: center;
+    margin: 100px 0;
+  }
+}
