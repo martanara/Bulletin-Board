@@ -39,8 +39,8 @@ let dbUri = '';
 
 /* MONGOOSE */
 
-if(NODE_ENV === 'test') dbUri = 'mongodb://localhost:27017/NewWaveDBtest';
-else dbUri = dbUri = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.rt8m7.mongodb.net/BulletinBoard?retryWrites=true&w=majority`;
+if(NODE_ENV === 'production') dbUri = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.rt8m7.mongodb.net/BulletinBoard?retryWrites=true&w=majority`;
+else dbUri = 'mongodb://localhost:27017/bulletinBoard';
 
 mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 

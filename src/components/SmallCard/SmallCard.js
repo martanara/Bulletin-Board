@@ -37,7 +37,7 @@ const SmallCard = (props) => {
       <CardMedia
         component="img"
         height="200"
-        image={props.image ? `/images/` + props.image : 'https://www.freeiconspng.com/uploads/no-image-icon-1.jpg'}
+        image={props.image ? props.image : 'https://www.freeiconspng.com/uploads/no-image-icon-1.jpg'}
         alt={props.title}
       />
       <CardContent>

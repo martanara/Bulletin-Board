@@ -1,5 +1,7 @@
 const Post = require('../models/post.model');
 
+const NODE_ENV = process.env.NODE_ENV;
+
 exports.getAllPosts = async (req, res) => {
   try {
     const result = await Post
@@ -26,35 +28,20 @@ exports.getPostById = async (req, res) => {
 };
 
 exports.addNewPost = async (req, res) => {
-  const { email, created, updated, status, title, text, image, price, phone, location } = req.body;
-  const file = req.file;
-  let fileName = '';
-  if(file) fileName = file.path.split('/').slice(-1)[0];
+  const { email, created, status, title, text, image, price, phone, location } = req.body;
 
-  if(updated === 'undefined'){
-    try {
-      const newPost = new Post({ email, created, status, title, text, image: fileName, price, phone, location });
-      await newPost.save();
-      res.json(newPost);
-    } catch(err) {
-      res.status(500).json({ message: err });
-    }
-  } else {
-    try {
-      const newPost = new Post({ email, created, updated, status, title, text, image: fileName, price, phone, location });
-      await newPost.save();
-      res.json(newPost);
-    } catch(err) {
-      res.status(500).json({ message: err });
-    }
-  }
-};
+  try {
+    const newPost = new Post({ email, created, status, title, text, image, price, phone, location });
+    await newPost.save();
+    res.json(newPost);
+  } catch(err) {
+    res.status(500).json({ message: err });
+  } 
+}
+
 
 exports.editPost = async (req, res) => {
   const { email, created, updated, status, title, text, image, price, phone, location } = req.body;
-  const file = req.file;
-  let fileName = '';
-  if (file) fileName = file.path.split('/').slice(-1)[0];
 
   try {
     const post = await Post.findById(req.params.id);
@@ -65,7 +52,7 @@ exports.editPost = async (req, res) => {
       post.status = status;
       post.title = title;
       post.text = text;
-      post.image = fileName;
+      post.image = image;
       post.price = price;
       post.phone = phone;
       post.location = location;

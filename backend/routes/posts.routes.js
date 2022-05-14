@@ -11,3 +11,5 @@ router.put('/post/:id', imageUpload.single('image'), PostController.editPost);
 router.delete('/post/:id', PostController.deletePost);
 
 module.exports = router;
+
+

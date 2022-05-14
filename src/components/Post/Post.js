@@ -48,7 +48,7 @@ const Post = () => {
         <div className={styles.postContainer}>
           {isDraft()}
           <div className={styles.imageContainer}>
-            <img alt={post.title} src={post.image ? `/images/` + post.image : 'https://www.freeiconspng.com/uploads/no-image-icon-1.jpg'}/>
+            <img alt={post.title} src={post.image ? post.image : 'https://www.freeiconspng.com/uploads/no-image-icon-1.jpg'}/>
           </div>
           <div className={styles.infoContainer}>
             <h1>{post.title}</h1>

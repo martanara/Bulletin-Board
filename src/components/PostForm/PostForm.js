@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { getLoggedUser } from '../../redux/usersRedux';
 
-import { TextField } from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core';
 
 import ImageUploader from 'react-images-upload';
 import { useForm } from 'react-hook-form';
@@ -15,6 +15,7 @@ import styles from './PostForm.module.scss';
 
 import PropTypes from 'prop-types';
 
+
 const PostForm = (props) => {
   const { register, handleSubmit: validate, formState: { errors } } = useForm();
 
@@ -22,7 +23,6 @@ const PostForm = (props) => {
 
   const [title, setTitle] = useState(props.title || '');
   const [text, setDescription] = useState(props.text || '');
-  const [image, setImage] = useState(props.image || '');
   const [status, setStatus] = useState('draft');
   const [price, setPrice] = useState(props.price || '');
   const [phone, setPhoneNumber] = useState(props.phone || '');
@@ -33,16 +33,53 @@ const PostForm = (props) => {
   const updated = isUpdated();
   const email = loggedInUser.email;
 
-  const handleImageUpload = (files) => {
-    setImage(files[0]);
-  };
+  const [image, setImage] = useState(props.image || '');
+  const [imageSelected, setImageSelected ] = useState('');
 
   const handleStatusChange = (status) => {
     setStatus(status);
   };
 
+  const selectImage = (files) => {
+    setImage('');
+    setImageSelected(files[0]);
+  };
+
+  const handleImageUpload = () => {
+    const data = new FormData();
+    data.append('file', imageSelected);
+    data.append('upload_preset', 'tnne2k9v');
+    data.append('cloud_name', 'dvjh8xuhq');
+    fetch('https://api.cloudinary.com/v1_1/dvjh8xuhq/image/upload',{
+      method: 'post',
+      body: data,
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        console.log('handle', image);
+        setImage(data.url);
+      })
+      .catch(err => console.log(err));
+  };
+
+  const isImage = () => image ?
+    (
+      <div className={styles.imageContainer}>
+        <p>Uploaded image</p>
+        <img alt='hello' src={image}/>
+      </div>
+    )
+    :
+    (
+      <Button variant="contained" color="primary" component="span" onClick={() => handleImageUpload()}>
+       Click to upload
+      </Button>
+    );
+
   const handleSubmit = () => {
+    console.log('submit', image);
     const post = { title, text, created, updated, email, status, image, price, phone, location };
+    console.log(post);
     const formData = new FormData();
 
     for(let key of ['title', 'text', 'created', 'updated','email', 'status', 'image', 'price', 'phone', 'location']) {
@@ -69,23 +106,26 @@ const PostForm = (props) => {
           withIcon={false}
           withPreview={true}
           buttonText="Choose images"
-          onChange={handleImageUpload}
+          onChange={selectImage}
           imgExtension={['.jpg', '.gif', '.png']}
           maxFileSize={5242880}
           singleImage={true}
         />
-        <TextField
-          style={{ width: '400px', margin: '5px' }}
-          {...register('text', { required: true, maxLength: 300 })}
-          required
-          type='text'
-          multiline
-          minRows={5}
-          label='text'
-          variant='outlined'
-          value={text}
-          onChange={e => setDescription(e.target.value)}
-        />
+        {isImage()}
+        <div className={styles.textField}>
+          <TextField
+            style={{ width: '400px', margin: '5px' }}
+            {...register('text', { required: true, maxLength: 300 })}
+            required
+            type='text'
+            multiline
+            minRows={5}
+            label='text'
+            variant='outlined'
+            value={text}
+            onChange={e => setDescription(e.target.value)}
+          />
+        </div>
         {errors.text && <span className={styles.error}>This field is required. text can have up to 300 characters.</span>}
         <TextField
           style={{ width: '200px', margin: '5px' }}
@@ -139,7 +179,7 @@ PostForm.propTypes = {
   updated: PropTypes.string,
   status: PropTypes.string,
   image: PropTypes.string,
-  price: PropTypes.string,
+  price: PropTypes.number,
   phone: PropTypes.string,
   location: PropTypes.string,
 };
