@@ -1,13 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import MainLayout from './MainLayout';
+import MyPosts from './MyPosts';
 import { Provider } from 'react-redux';
 import { store } from  '../../redux/store';
 
-describe('Component MainLayout', () => {
+describe('Component MyPosts', () => {
   it('should render without crashing', () => {
     const component = shallow(<Provider store={store}>
-      <MainLayout />
+      <MyPosts />
     </Provider>);
     expect(component).toBeTruthy();
   });

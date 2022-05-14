@@ -1,13 +1,17 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import MainLayout from './MainLayout';
+import PostForm from './PostForm';
 import { Provider } from 'react-redux';
 import { store } from  '../../redux/store';
 
-describe('Component MainLayout', () => {
+const action = () => {
+  console.log('action');
+};
+
+describe('Component PostForm', () => {
   it('should render without crashing', () => {
     const component = shallow(<Provider store={store}>
-      <MainLayout />
+      <PostForm action={action}/>
     </Provider>);
     expect(component).toBeTruthy();
   });
