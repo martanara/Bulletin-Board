@@ -10,6 +10,7 @@ import { getPostById, removePostRequest, getIsLoading } from '../../redux/postsR
 import { getLoggedUser } from '../../redux/usersRedux';
 
 import CommonButton from '../CommonButton/CommonButton';
+import OutlinedButton from '../OutlinedButton/OutlinedButton';
 import Spinner from '../Spinner/Spinner';
 
 import PlaceOutlinedIcon from '@material-ui/icons/PlaceOutlined';
@@ -34,9 +35,13 @@ const Post = () => {
   };
 
   const editButton = () => loggedInUser.email === post.email &&
-    <div className={styles.editButton}>
-      <Link to={`/post/${id}/edit`} className={styles.link}><CommonButton>Edit Post</CommonButton></Link>
-      <CommonButton onClick={() => removePost()}>Remove Post</CommonButton>
+    <div className={styles.buttons}>
+      <div className={styles.button}>
+        <Link to={`/post/${id}/edit`} className={styles.link}><CommonButton>Edit Post</CommonButton></Link>
+      </div>
+      <div className={styles.button}>
+        <CommonButton onClick={() => removePost()}>Remove Post</CommonButton>
+      </div>
     </div>;
 
   const isDraft = () => post.status === 'draft' &&
@@ -53,9 +58,9 @@ const Post = () => {
           <div className={styles.root}>
             <div className={styles.postContainer}>
               {isDraft()}
-              <div className={styles.imageContainer}>
-                <img alt={post.title} src={post.image ? post.image : 'https://www.freeiconspng.com/uploads/no-image-icon-1.jpg'}/>
-              </div>
+
+              <img alt={post.title} src={post.image ? post.image : 'https://www.freeiconspng.com/uploads/no-image-icon-1.jpg'}/>
+
               <div className={styles.infoContainer}>
                 <h1>{post.title}</h1>
                 {post.location && (
@@ -79,6 +84,7 @@ const Post = () => {
                   <p>Published: {utils.dateToStr(post.created)} {post.updated && (<span>Edited: {utils.dateToStr(post.updated)}</span>)}</p>
                 </div>
                 {editButton()}
+                <Link to={`/allposts`} className={styles.link}><OutlinedButton>Back to posts</OutlinedButton></Link>
               </div>
             </div>
           </div>

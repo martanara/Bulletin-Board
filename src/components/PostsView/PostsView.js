@@ -13,7 +13,7 @@ const PostsView = ({ posts }) => {
     <div className={styles.root}>
       <Grid container spacing={3}>
         {posts.map(post => (
-          <Grid item xs={6} md={4} key={post._id}>
+          <Grid item xs={12} sm={4} key={post._id}>
             <SmallCard
               id={post._id}
               title={post.title}

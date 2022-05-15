@@ -20,7 +20,7 @@ const MyPosts = () => {
   const welcomeMessage = () => loggedInUser.name ?
     (
       <div>
-        <h2>Welcome back {loggedInUser.name}!</h2>
+        <h2>Welcome {loggedInUser.name}!</h2>
         <h3>You can now add and edit your posts below</h3>
       </div>
     )

@@ -36,3 +36,38 @@
   }
 }
 
+@media (max-width: 820px) {
+  .root {
+  min-height: 80px;
+  background-color: $main;
+
+  .headerLink {
+    text-decoration: none;
+  }
+
+  .link {
+    color: $light;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: 700;
+    margin-left: 15px;
+    text-decoration: none;
+  }
+
+  h1 {
+    display: none;
+  }
+
+  .navlinks {
+    @include flex(row, center, center);
+    .navItem {
+      margin-left: 15px;
+    }
+    .navSelect {
+      margin: 0 15px 10px 15px;
+    }
+  }
+}
+}
+
+

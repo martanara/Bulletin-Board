@@ -185,12 +185,16 @@ const PostForm = (props) => {
               onChange={e => setLocation(e.target.value)}
             />
             <div className={styles.buttons}>
-              <CommonButton onClick={() => handleStatusChange('published')} type="submit">
-                Publish
-              </CommonButton>
-              <CommonButton onClick={() => handleStatusChange('draft')} type="submit">
-                Save as draft
-              </CommonButton>
+              <div className={styles.button}>
+                <CommonButton onClick={() => handleStatusChange('published')} type="submit">
+                  Publish
+                </CommonButton>
+              </div>
+              <div className={styles.button}>
+                <CommonButton onClick={() => handleStatusChange('draft')} type="submit">
+                  Save as draft
+                </CommonButton>
+              </div>
             </div>
           </div>
         )}
