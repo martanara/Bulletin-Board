@@ -55,7 +55,6 @@ export const fetchAllPosts = () => {
 };
 
 export const addPostRequest = (post) => async dispatch => {
-  console.log(post);
   try {
     dispatch(fetchStarted());
     const res = await axios({

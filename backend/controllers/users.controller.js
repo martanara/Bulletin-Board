@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const NODE_ENV = process.env.NODE_ENV;
 
 exports.addNewUser = async (req, res) => {
   const { name, email, role, loggedIn } = req.body;
@@ -12,7 +13,8 @@ exports.addNewUser = async (req, res) => {
     }
     else res.json({ exists: 'true' });
   } catch(err) {
-    res.status(500).json({ message: err });
+    if(NODE_ENV === 'production') console.log('Database error...');
+    else res.status(500).json(err);
   }
 };
 

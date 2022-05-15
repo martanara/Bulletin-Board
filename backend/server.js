@@ -48,7 +48,10 @@ const db = mongoose.connection;
 db.once('open', () => {
   console.log('Successfully connected to the database');
 });
-db.on('error', err => console.log('Error: ' + err));
+db.on('error', err => {
+  if(process.env.production === true) console.log('Couldn\'t connect to db...');
+  else console.log(err);
+});
 
 /* START SERVER */
 const port = process.env.PORT || 8000;

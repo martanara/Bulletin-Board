@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { Link } from 'react-router-dom';
-
 import { getLoggedUser } from '../../redux/usersRedux';
 import { getIsLoading } from '../../redux/postsRedux';
 
@@ -28,7 +26,6 @@ const PostForm = (props) => {
 
   // Get the load & error state
   const load = useSelector(state => getIsLoading(state));
-  console.log(load);
 
   // Post details
   const [title, setTitle] = useState(props.title || '');
@@ -70,10 +67,11 @@ const PostForm = (props) => {
     })
       .then(resp => resp.json())
       .then(data => {
-        console.log('handle', image);
         setImage(data.url);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        //console.log(err);
+      });
   };
 
   const isImage = () => image ?
@@ -93,9 +91,7 @@ const PostForm = (props) => {
   // Actions on form ubmit
 
   const handleSubmit = () => {
-    console.log('submit', image);
     const post = { title, text, created, updated, email, status, image, price, phone, location };
-    console.log(post);
     const formData = new FormData();
 
     for(let key of ['title', 'text', 'created', 'updated','email', 'status', 'image', 'price', 'phone', 'location']) {
@@ -120,7 +116,7 @@ const PostForm = (props) => {
           <div className={styles.form}>
             <TextField
               style={{ width: '100%', marginBottom: '10px' }}
-              {...register('title', { required: true, maxLength: 20 })}
+              {...register('title', { required: true, maxLength: 200 })}
               type='text'
               label='title'
               variant='outlined'
@@ -128,7 +124,7 @@ const PostForm = (props) => {
               onChange={e => setTitle(e.target.value)}
               width='200px'
             />
-            {errors.title && <span className={styles.error}>This field is required. Title can have up to 20 characters.</span>}
+            {errors.title && <span className={styles.error}>This field is required. Title can have up to 200 characters.</span>}
             <ImageUploader
               className={styles.imageUploader}
               withIcon={false}
@@ -142,7 +138,7 @@ const PostForm = (props) => {
             {isImage()}
             <TextField
               style={{ width: '100%', marginTop: '30px', marginBottom: '10px'}}
-              {...register('text', { required: true, maxLength: 300 })}
+              {...register('text', { required: true, maxLength: 1000 })}
               required
               type='text'
               multiline
@@ -152,7 +148,7 @@ const PostForm = (props) => {
               value={text}
               onChange={e => setDescription(e.target.value)}
             />
-            {errors.text && <span className={styles.error}>This field is required. text can have up to 300 characters.</span>}
+            {errors.text && <span className={styles.error}>This field is required. Text can have up to 1000 characters.</span>}
             <TextField
               style={{ width: '200px', margin: '5px' }}
               {...register('price', { required: true, min: 1 })}

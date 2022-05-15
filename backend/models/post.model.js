@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
-  email: { type: String, required: true },
+  email: { type: String, required: true, match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email address'] },
   created: { type: Date, required: true },
   updated: { type: Date },
   status: { type: String, required: true },

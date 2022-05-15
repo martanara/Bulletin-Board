@@ -1,5 +1,4 @@
 const Post = require('../models/post.model');
-
 const NODE_ENV = process.env.NODE_ENV;
 
 exports.getAllPosts = async (req, res) => {
@@ -11,7 +10,8 @@ exports.getAllPosts = async (req, res) => {
     else res.json(result);
   }
   catch(err) {
-    res.status(500).json(err);
+    if(NODE_ENV === 'production') console.log('Database error...');
+    else res.status(500).json(err);
   }
 };
 
@@ -23,7 +23,8 @@ exports.getPostById = async (req, res) => {
     else res.json(result);
   }
   catch(err) {
-    res.status(500).json(err);
+    if(NODE_ENV === 'production') console.log('Database error...');
+    else res.status(500).json(err);
   }
 };
 
@@ -35,10 +36,10 @@ exports.addNewPost = async (req, res) => {
     await newPost.save();
     res.json(newPost);
   } catch(err) {
-    res.status(500).json({ message: err });
-  } 
-}
-
+    if(NODE_ENV === 'production') console.log('Database error...');
+    else res.status(500).json(err);
+  }
+};
 
 exports.editPost = async (req, res) => {
   const { email, created, updated, status, title, text, image, price, phone, location } = req.body;
@@ -61,7 +62,8 @@ exports.editPost = async (req, res) => {
     } else res.status(404).json({ message: 'Not found' });
   }
   catch(err) {
-    res.status(500).json({ message : err});
+    if(NODE_ENV === 'production') console.log('Database error...');
+    else res.status(500).json(err);
   }
 };
 
@@ -74,6 +76,7 @@ exports.deletePost = async (req, res) => {
     } else res.status(404).json({ message: 'Not found' });
   }
   catch(err) {
-    res.status(500).json({ message : err});
+    if(NODE_ENV === 'production') console.log('Database error...');
+    else res.status(500).json(err);
   }
 };
