@@ -46,6 +46,7 @@ const PostForm = (props) => {
 
   const [image, setImage] = useState(props.image || '');
   const [imageSelected, setImageSelected ] = useState('');
+  const [imageError, setImageError] = useState(false);
 
   const handleStatusChange = (status) => {
     setStatus(status);
@@ -68,11 +69,14 @@ const PostForm = (props) => {
       .then(resp => resp.json())
       .then(data => {
         setImage(data.url);
+        setImageError(false);
       })
       .catch(err => {
-        //console.log(err);
+        setImageError(true);
       });
   };
+
+  const isImageError = () => imageError && (<p>Something went wrong...</p>);
 
   const isImage = () => image ?
     (
@@ -135,6 +139,7 @@ const PostForm = (props) => {
               maxFileSize={5242880}
               singleImage={true}
             />
+            {isImageError()}
             {isImage()}
             <TextField
               style={{ width: '100%', marginTop: '30px', marginBottom: '10px'}}
