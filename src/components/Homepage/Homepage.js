@@ -15,7 +15,7 @@ import styles from './Homepage.module.scss';
 const Homepage = () => {
   const load = useSelector(state => getIsLoading(state));
 
-  const isLoading = () => !load ? (<LatestPosts />) :
+  const isLoading = () => !load.active ? (<LatestPosts />) :
     (<div className={styles.spinner}><Spinner /></div>);
 
   return (

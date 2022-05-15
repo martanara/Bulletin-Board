@@ -6,7 +6,7 @@ export const getAllPosts = ({posts}) => (posts.data).sort((a, b) => a.post.creat
 export const getMyPosts = ({posts}, email) => posts.data.filter(post => post.email === email);
 export const getAllPublished = ({posts}) => posts.data.filter(post => post.status === 'published');
 export const getPostById = ({ posts }, postId) => (posts.data).find(post => post._id === postId);
-export const getIsLoading = ({ posts }) => posts.loading.active;
+export const getIsLoading = ({ posts }) => posts.loading;
 
 /* action name creator */
 const reducerName = 'posts';
@@ -108,6 +108,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
+          success: true,
         },
         data: [...statePart.data, { ...action.payload}],
       };
@@ -117,6 +118,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
+          success: false,
         },
         data: statePart.data.filter(post => post._id !== action.payload),
       };
@@ -126,6 +128,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
+          success: false,
         },
         data: statePart.data.map(post => post._id === action.payload._id ? { ...post, ...action.payload } : post),
       };
@@ -135,6 +138,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: true,
           error: false,
+          success: false,
         },
       };
     }
@@ -144,6 +148,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
+          success: false,
         },
         data: action.payload,
       };
@@ -154,6 +159,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: action.payload,
+          success: false,
         },
       };
     }
