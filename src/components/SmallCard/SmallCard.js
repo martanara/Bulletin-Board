@@ -25,7 +25,6 @@ const SmallCard = (props) => {
     `This is a draft!! Not published yet.` :
     `Published: ${utils.dateToStr(props.created)}`;
 
-
   const classes = useStyles();
   return (
     <Card className={classes.root} elevation={2}>
@@ -42,7 +41,7 @@ const SmallCard = (props) => {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {props.price}
+          {props.price} USD
         </Typography>
       </CardContent>
       <CardActions>

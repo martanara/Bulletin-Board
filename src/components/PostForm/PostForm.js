@@ -151,7 +151,7 @@ const PostForm = (props) => {
             {errors.text && <span className={styles.error}>This field is required. Text can have up to 1000 characters.</span>}
             <TextField
               style={{ width: '200px', margin: '5px' }}
-              {...register('price', { required: true, min: 1 })}
+              {...register('price', { required: true, min: 0 })}
               required
               type='text'
               label='price'
