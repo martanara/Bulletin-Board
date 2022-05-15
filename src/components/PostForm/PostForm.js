@@ -28,6 +28,7 @@ const PostForm = (props) => {
 
   // Get the load & error state
   const load = useSelector(state => getIsLoading(state));
+  console.log(load);
 
   // Post details
   const [title, setTitle] = useState(props.title || '');
@@ -110,11 +111,10 @@ const PostForm = (props) => {
           (
             <div className={styles.successMessage}>
               <p>Your post has been successfully submitted!</p>
-              <Link to={`/myposts`} className={styles.link}><CommonButton>Back to My Posts</CommonButton></Link>
             </div>
           )
         }
-        { (load.active) && <div className={styles.spinner}><Spinner /></div> }
+        { (load.active) && <Spinner color="primary" className="standard-box d-block mr-auto ml-auto" /> }
         { ((!load.active && !load.success) || load.error) &&
         (
           <div className={styles.form}>

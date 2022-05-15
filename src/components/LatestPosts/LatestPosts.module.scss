@@ -2,9 +2,7 @@
 
 .root {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include flex(column, center, center);
   margin-top: 20px;
   h2 {
     margin-bottom: 30px;

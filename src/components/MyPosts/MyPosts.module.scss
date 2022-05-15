@@ -1,7 +1,7 @@
 @import '../../styles/settings.scss';
 
 .root {
-  min-height: 100vh;
+  @include height();
 
   .welcome {
     margin: 50px 0;

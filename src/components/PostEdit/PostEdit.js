@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useParams } from 'react-router';
 
-import { Navigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -18,9 +18,11 @@ const PostEdit = () => {
   const postData = useSelector(state => getPostById(state, id));
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = post => {
     dispatch(updatePostRequest(post, id));
+    navigate('/myposts');
   };
 
   if (!postData) return <Navigate to='/' />;

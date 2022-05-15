@@ -11,3 +11,13 @@ $secondary-dark: #ac7871;
 $secondary-light: #B8B7B8;
 $warning: #c22149;
 
+@mixin flex($flex-direction, $align-items, $justify-content) {
+  display: flex;
+  flex-direction: $flex-direction;
+  align-items: $align-items;
+  justify-content: $justify-content;
+}
+
+@mixin height(){
+  min-height: 100vh;
+}

@@ -1,7 +1,7 @@
 @import '../../styles/settings.scss';
 
 .root {
-  min-height: 100vh;
+  @include height();
   .spinner {
     text-align: center;
     margin: 100px 0;

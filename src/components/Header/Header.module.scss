@@ -3,11 +3,8 @@
 .root {
   min-height: 80px;
   padding: 10px 30px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  @include flex(row, center, space-between);
   background-color: $main;
-  align-items: center;
 
   .headerLink {
     text-decoration: none;
@@ -29,10 +26,7 @@
   }
 
   .navlinks {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    @include flex(row, center, center);
     .navItem {
       margin-left: 40px;
     }

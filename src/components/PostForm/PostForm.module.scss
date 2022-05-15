@@ -2,10 +2,8 @@
 
 .root {
   margin: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  @include flex(column, center, center);
+  @include height();
 
   .spinner {
     text-align: center;
@@ -33,9 +31,7 @@
   .form {
     padding: 30px 30px;
     width: 700px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include flex(column, center, center);
     background: $light;
     border-radius: 3%;
 

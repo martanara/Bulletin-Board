@@ -22,6 +22,7 @@ const UPDATE_POST = createActionName('UPDATE_POST');
 const FETCH_START = createActionName('FETCH_START');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
+const FETCH_END = createActionName('FETCH_END');
 
 /* action creators */
 export const updatePosts = payload => ({ type: UPDATE_POSTS, payload });
@@ -33,6 +34,7 @@ export const updatePost = payload => ({ type: UPDATE_POST, payload });
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
+export const fetchEnded =  payload => ({ payload, type: FETCH_END });
 
 /* thunk creators */
 
@@ -44,6 +46,7 @@ export const fetchAllPosts = () => {
       .get(`${API_URL}/posts`)
       .then(res => {
         dispatch(fetchSuccess(res.data));
+        dispatch(fetchEnded());
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
@@ -62,6 +65,7 @@ export const addPostRequest = (post) => async dispatch => {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     dispatch(addPost(res.data));
+    dispatch(fetchEnded());
   } catch (err) {
     dispatch(fetchError(err));
   }
@@ -77,6 +81,7 @@ export const updatePostRequest = (post, id) => async dispatch => {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     dispatch(updatePost(res.data));
+    dispatch(fetchEnded());
   } catch (err) {
     dispatch(fetchError(err));
   }
@@ -90,6 +95,7 @@ export const removePostRequest = (postId) => {
       .delete(`${API_URL}/post/${postId}`)
       .then(res => {
         dispatch(removePost(res.data));
+        dispatch(fetchEnded());
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
@@ -118,7 +124,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
-          success: false,
+          success: true,
         },
         data: statePart.data.filter(post => post._id !== action.payload),
       };
@@ -128,7 +134,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
-          success: false,
+          success: true,
         },
         data: statePart.data.map(post => post._id === action.payload._id ? { ...post, ...action.payload } : post),
       };
@@ -148,7 +154,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
-          success: false,
+          success: true,
         },
         data: action.payload,
       };
@@ -163,6 +169,15 @@ export const reducer = (statePart = [], action = {}) => {
         },
       };
     }
+    case FETCH_END:
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+          success: false,
+        },
+      };
     default:
       return statePart;
   }

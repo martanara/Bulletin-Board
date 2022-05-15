@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -13,11 +13,13 @@ import styles from './PostAdd.module.scss';
 
 const PostAdd = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const loggedInUser = useSelector(state => getLoggedUser(state));
 
   const handleSubmit = post => {
     dispatch(addPostRequest(post));
+    navigate('/myposts');
   };
 
   if (!loggedInUser) return <Navigate to='/' />;

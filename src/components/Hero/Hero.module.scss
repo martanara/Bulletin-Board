@@ -3,11 +3,8 @@
 .root {
   height: 500px;
   padding: 5px 25px;
-  display: flex;
-  flex-direction: column;
+  @include flex(column, center, center);
   background-color: $main;
-  align-items: center;
-  justify-content: center;
   background-image: url('/images/pexels-artem-beliaikin-1051747.jpeg');
   background-position: center center;
   background-size: cover;
