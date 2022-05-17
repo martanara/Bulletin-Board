@@ -2,7 +2,7 @@ import axios from 'axios';
 import { API_URL } from '../config';
 
 /* selectors */
-export const getAllPosts = ({posts}) => (posts.data).sort((a, b) => a.post.created > b.post.created);
+export const getAllPosts = ({posts}) => (posts.data);
 export const getMyPosts = ({posts}, email) => posts.data.filter(post => post.email === email);
 export const getAllPublished = ({posts}) => posts.data.filter(post => post.status === 'published');
 export const getPostById = ({ posts }, postId) => (posts.data).find(post => post._id === postId);

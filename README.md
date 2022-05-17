@@ -1,6 +1,6 @@
 ## Bulletin Board
 
-Follow the link to view this project on Heroku [Create React App](https://bulletin-board-mn.herokuapp.com/).
+Follow the link to view this project on Heroku: [Bulletin Board on Heroku](https://bulletin-board-mn.herokuapp.com/).
 
 ## Description
 
