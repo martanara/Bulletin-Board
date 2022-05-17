@@ -2,7 +2,6 @@
 
 .root {
   @include height();
-
   .welcome {
     margin: 50px 0;
     color: $dark;

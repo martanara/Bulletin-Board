@@ -2,6 +2,7 @@
 
 .root {
   @include flex(column, center, center);
+  @include height();
   color: $dark;
 
   .spinner {
@@ -14,10 +15,10 @@
   }
 
   .postContainer {
+    width: 750px;
     margin: 20px 0;
     padding: 20px 0;
     background: $light;
-    max-width: 800px;
     border-radius: 3%;
     @include flex(column, center, center);
     border: solid 1px $secondary-light;
@@ -32,7 +33,7 @@
 
     img {
       max-width: 90%;
-      max-height: 700px;
+      max-height: 400px;
       object-fit: cover;
       overflow: hidden;
       border-radius: 5%;
@@ -91,21 +92,33 @@
       }
       .buttons {
         margin-bottom: 20px;
+        display: flex;
+        flex-direction: row;
       }
     }
   }
 }
 
-@media (max-width: 820px) {
+@media (max-width: 768px) {
   .root {
-    .buttons {
-      .button {
-        margin: 10px 0;
-      }
-    }
     .postContainer {
+      width: 550px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .root {
+    .postContainer {
+      width: 350px;
       .dates {
         font-size: 12px;
+      }
+      .buttons {
+        flex-direction: column;
+        .button {
+          margin: 10px 0;
+        }
       }
     }
   }
